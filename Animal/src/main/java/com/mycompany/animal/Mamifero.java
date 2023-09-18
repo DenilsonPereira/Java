@@ -12,7 +12,7 @@ public class Mamifero extends Animal{
     private String aliPref;
 
     public Mamifero(String n, String c, String nP, String cor, String a, String v, String ali) {
-        super(n, c, nP, cor, a, v);
+        super(n, c, nP, cor, a = "Terra", v);
         this.aliPref = ali;
     }
     

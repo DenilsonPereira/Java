@@ -12,7 +12,7 @@ public class Peixe extends Animal{
     private String barbatanas, calda;
     
     public Peixe(String n, String c, String nP, String cor, String a, String v, String b, String cal) {
-        super(n, c, nP, cor, a, v);
+        super(n, c, nP, cor = "cinza", a = "Mar", v);
         this.barbatanas = b;
         this.calda = cal;
         

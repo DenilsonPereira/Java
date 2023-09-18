@@ -9,9 +9,10 @@ package com.mycompany.animal;
  * @author Denilson
  */
 public class Animal {
-    private String nome, comprimento, numPatas, cor, ambiente, velocidade;
+    private String nome, comprimento, cor, ambiente, velocidade, numPatas;
 
     public Animal(String n, String c, String nP, String cor, String a, String v){
+        nP = "4";
         this.nome = n;
         this.comprimento = c;
         this.numPatas = nP;

@@ -13,9 +13,8 @@ public class Teste {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         int opcao;
-        ArrayList<Peixe> peixes = new ArrayList<Peixe>();
-        ArrayList<Mamifero> mamiferos = new ArrayList<Mamifero>();
-        String nome, comprimento, numPatas, cor, ambiente, velocidade, barbatanas, calda, aliPref;
+        ArrayList<Animal> animais = new ArrayList<Animal>();
+        String nome, comprimento, cor, ambiente, velocidade, barbatanas, calda, aliPref, numPatas;
         Peixe peixe;
         Mamifero mamifero;
         
@@ -43,9 +42,14 @@ public class Teste {
                     System.out.println("Comprimento: ");
                     comprimento = sc.nextLine();
                     
-                    numPatas = "0";
-                    cor = "Cizenta";
-                    ambiente = "Mar";
+                    System.out.println("Números de patas: ");
+                    numPatas = sc.nextLine();
+                    
+                    System.out.println("Cor: ");
+                    cor = sc.nextLine();
+                    
+                    System.out.println("Ambiente: ");
+                    ambiente = sc.nextLine();
                     
                     System.out.println("Velocidade(m/s): ");
                     velocidade = sc.nextLine();
@@ -57,7 +61,7 @@ public class Teste {
                     calda = sc.nextLine();
                     
                     peixe = new Peixe(nome, comprimento, numPatas, cor, ambiente, velocidade, barbatanas, calda);
-                    peixes.add(peixe);
+                    animais.add(peixe);
                     break;
                 case 2:
                     System.out.println("Nome do mamífero: ");
@@ -72,7 +76,8 @@ public class Teste {
                     System.out.println("Cor: ");
                     cor = sc.nextLine();
                     
-                    ambiente = "Terra";
+                    System.out.println("Ambiente: ");
+                    ambiente = sc.nextLine();
                     
                     System.out.println("Velocidade(m/s): ");
                     velocidade = sc.nextLine();
@@ -81,22 +86,27 @@ public class Teste {
                     aliPref = sc.nextLine();
                     
                     mamifero = new Mamifero(nome, comprimento, numPatas, cor, ambiente, velocidade, aliPref);
-                    mamiferos.add(mamifero);
+                    animais.add(mamifero);
                     break;
                 case 3:
-                    for(Peixe p : peixes){
-                        System.out.println("-------------------------------");
-                        System.out.printf("Nome: %s %nComprimento: %s %nNúmero de patas: %s %nCor: %s %nAmbiente: %s %nVelocidade: %s %nCaracterísticas das barbatanas: %s %nCaracterísticas da calda: %s%n" ,p.getNome(), p.getComprimento(), p.getNumPatas(), p.getCor(), p.getAmbiente(), p.getVelocidade(), p.getBarbatanas(), p.getCalda());
+                    for(Animal item : animais){
+                        if(item instanceof Peixe p){
+                            System.out.println("-------------------------------");
+                            System.out.printf("Nome: %s %nComprimento: %s %nNúmero de patas: %s %nCor: %s %nAmbiente: %s %nVelocidade: %s %nCaracterísticas das barbatanas: %s %nCaracterísticas da calda: %s%n" ,p.getNome(), p.getComprimento(), p.getNumPatas(), p.getCor(), p.getAmbiente(), p.getVelocidade(), p.getBarbatanas(), p.getCalda());
+                        }
+                        
+                        if(item instanceof Mamifero m){
+                            System.out.println("-------------------------------");
+                            System.out.printf("Nome: %s %nComprimento: %s %nNúmero de patas: %s %nCor: %s %nAmbiente: %s %nVelocidade: %s %nAlimento preferido: %s%n" ,m.getNome(), m.getComprimento(), m.getNumPatas(), m.getCor(), m.getAmbiente(), m.getVelocidade(), m.getAliPref());
                     }
-                    for(Mamifero m : mamiferos){
-                        System.out.println("-------------------------------");
-                        System.out.printf("Nome: %s %nComprimento: %s %nNúmero de patas: %s %nCor: %s %nAmbiente: %s %nVelocidade: %s %nAlimento preferido: %s%n" ,m.getNome(), m.getComprimento(), m.getNumPatas(), m.getCor(), m.getAmbiente(), m.getVelocidade(), m.getAliPref());
                     }
                     break;
                 case 4:
-                    for(Peixe p : peixes){
-                        System.out.println("-------------------------------");
-                        System.out.printf("Nome: %s %nComprimento: %s %nNúmero de patas: %s %nCor: %s %nAmbiente: %s %nVelocidade: %s %nCaracterísticas das barbatanas: %s %nCaracterísticas da calda: %s%n" ,p.getNome(), p.getComprimento(), p.getNumPatas(), p.getCor(), p.getAmbiente(), p.getVelocidade(), p.getBarbatanas(), p.getCalda());
+                    for(Animal item : animais){
+                        if(item instanceof Peixe peixe1){
+                            System.out.println("-------------------------------");
+                            System.out.printf("Nome: %s %nComprimento: %s %nNúmero de patas: %s %nCor: %s %nAmbiente: %s %nVelocidade: %s %nCaracterísticas das barbatanas: %s %nCaracterísticas da calda: %s%n" ,item.getNome(), item.getComprimento(), item.getNumPatas(), item.getCor(), item.getAmbiente(), item.getVelocidade(), peixe1.getBarbatanas(), peixe1.getCalda());
+                        }
                     }
                     break;
             }
