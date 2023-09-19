@@ -11,6 +11,10 @@ package com.mycompany.bancocontas;
 public class Cliente {
     private String nomeCliente, cpf;
     
+    public Cliente(String nome, String cpf){
+        this.nomeCliente = nome;
+        this.cpf = cpf;
+    }
     public String getNomeCliente(){
         return nomeCliente;
     }
@@ -21,11 +25,6 @@ public class Cliente {
         return cpf;
     }
     public void setCpf(String cpf){
-        this.cpf = cpf;
-    }
-    
-    public Cliente(String nome, String cpf){
-        this.nomeCliente = nome;
         this.cpf = cpf;
     }
 }

@@ -11,6 +11,11 @@ package com.mycompany.bancocontas;
 public class Banco {
     private String numeroAgencia, nomeAgencia;
     
+    public Banco(String numero, String nome){
+        this.numeroAgencia = numero;
+        this.nomeAgencia = nome;
+    }
+    
     public String getNumeroAgencia(){
         return numeroAgencia;
     }
@@ -22,10 +27,5 @@ public class Banco {
     }
     public void setNomeAgencia(String nomeAgencia){
         this.nomeAgencia = nomeAgencia;
-    }
-    
-    public Banco(String numero, String nome){
-        this.numeroAgencia = numero;
-        this.nomeAgencia = nome;
     }
 }

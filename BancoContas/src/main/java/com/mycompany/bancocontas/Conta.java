@@ -12,7 +12,14 @@ public class Conta {
     private String numero;
     private Banco banco;
     private Cliente cliente;
-    private double saldo;
+    protected double saldo;
+    
+    public Conta(String n, Banco b, Cliente c, double s){
+        this.numero = n;
+        this.banco = b;
+        this.cliente = c;
+        this.saldo = s;
+    }
     
     public String getNumero(){
         return numero;
@@ -37,12 +44,5 @@ public class Conta {
     }
     public void setSaldo(double saldo){
         this.saldo = saldo;
-    }
-    
-    public Conta(String n, Banco b, Cliente c, double s){
-        this.numero = n;
-        this.banco = b;
-        this.cliente = c;
-        this.saldo = s;
     }
 }
