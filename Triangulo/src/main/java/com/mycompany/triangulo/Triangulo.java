@@ -38,12 +38,8 @@ public class Triangulo {
         Y.c = sc.nextDouble();
         sc.nextLine();
         
-        Double p = (X.a+X.b+X.c)/2;
-        
-        double areaX = Math.sqrt(p*(p-X.a)*(p-X.b)*(p-X.c));
-        
-        p = (Y.a+Y.b+Y.c)/2;
-        double areaY = Math.sqrt(p*(p-Y.a)*(p-Y.b)*(p-Y.c));
+        double areaX = X.calculo();
+        double areaY = Y.calculo();
         
         System.out.println("Triangle X area: " + areaX);
         System.out.println("Triangle Y area: " + areaY);
@@ -52,6 +48,5 @@ public class Triangulo {
         }else{
             System.out.println("Larger: Y");
         }
-        
     }
 }
