@@ -14,9 +14,14 @@ public  abstract class Quadilatero {
         this.base = b;
         this.altura = a;
     }
-    public abstract void calcularArea(){
+    
+    public float getBase(){
+        return base;
     }
-    public  abstract void calcularPerimetro(){
-        
+    public float getAltura(){
+        return altura;
     }
+    
+    public abstract void calcularArea();
+    public  abstract void calcularPerimetro();
 }

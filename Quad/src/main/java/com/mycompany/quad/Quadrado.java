@@ -9,11 +9,11 @@ package com.mycompany.quad;
  * @author 20231ADSGR0057
  */
 public class Quadrado extends Retangulo{
-    private float lado, lado2;
+    private float lado;
     
-    public Quadrado(float lado, float la){
+    public Quadrado(float lado){
+        super(lado, lado);
         this.lado = lado;
-        this.lado2= la;
     }
     @Override
     public void calcularArea(){

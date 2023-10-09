@@ -11,7 +11,8 @@ package com.mycompany.quad;
 public class Circulo extends Quadilatero{
     private float raio;
     
-    public Circulo(float r){
+    public Circulo(float r, float b, float a){
+        super(b,a);
         this.raio = r;
     }
     @Override

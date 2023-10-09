@@ -9,21 +9,19 @@ package com.mycompany.quad;
  * @author 20231ADSGR0057
  */
 public class Retangulo extends Quadilatero{
-    private float lado, altura;
-    public Retangulo(float l, float a){
-        this.lado = l;
-        this.altura = a;
+    public Retangulo(float base, float altura){
+        super(base,altura);
     }
     
     @Override
     public void calcularArea() {
-        float area = this.lado * this.altura;
+        float area = this.getBase() * this.getAltura();
         System.out.println(area);
     }
 
     @Override
     public void calcularPerimetro() {
-       float perimetro = 2 * (this.lado+this.altura);
+       float perimetro = 2 * (this.getBase()+this.getAltura());
        System.out.println(perimetro);
     }
     
