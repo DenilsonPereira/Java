@@ -9,9 +9,19 @@ package application;
  * @author Denilson
  */
 public class Magazine extends LibraryItem{
-    public Magazine(String name, String author, String yearPublication){
-        super(name, author, yearPublication);
+    private String edition;
+    public Magazine(String name, String author, String yearPublication, Boolean availability, String edition){
+        super(name, author, yearPublication, availability);
+        this.edition = edition;
     }
+    
+    public String getEdition(){
+        return edition;
+    }
+    public void setEdition(String edition){
+        this.edition = edition;
+    }
+    
     @Override
     public void checkAvailability(){
     }
