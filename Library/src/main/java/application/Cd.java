@@ -8,7 +8,7 @@ package application;
  *
  * @author Denilson
  */
-public class Cd extends LibraryItem{
+public class Cd extends LibraryItem implements LoanManagement{
     public int volume, numberTracks, amount;
     public Cd(String name, String author, String yearPublication, Boolean availability, int volume, int numberTracks, int amount){
         super(name, author, yearPublication, availability);
@@ -41,4 +41,10 @@ public class Cd extends LibraryItem{
     @Override
     public void checkAvailability(){
     }
+    
+    @Override
+    public void lendItem() {}
+    
+    @Override
+    public void returnItem(){}
 }

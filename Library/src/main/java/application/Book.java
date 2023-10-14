@@ -8,7 +8,7 @@ package application;
  *
  * @author Denilson
  */
-public class Book extends LibraryItem{
+public class Book extends LibraryItem implements LoanManagement{
     private String isbn, bookPublisher, gender;
     public Book(String name, String author, String yearPublication,Boolean availability, String isbn, String bookPublisher, String gender){
         super(name, author, yearPublication, availability);
@@ -42,4 +42,9 @@ public class Book extends LibraryItem{
     public void checkAvailability(){
         
     }
+
+    @Override
+    public void lendItem() {}
+    @Override
+    public void returnItem(){}
 }

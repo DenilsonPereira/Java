@@ -8,7 +8,7 @@ package application;
  *
  * @author Denilson
  */
-public class Magazine extends LibraryItem{
+public class Magazine extends LibraryItem implements LoanManagement{
     private String edition;
     public Magazine(String name, String author, String yearPublication, Boolean availability, String edition){
         super(name, author, yearPublication, availability);
@@ -25,4 +25,11 @@ public class Magazine extends LibraryItem{
     @Override
     public void checkAvailability(){
     }
+    
+    
+    @Override
+    public void lendItem() {}
+    
+    @Override
+    public void returnItem(){}
 }

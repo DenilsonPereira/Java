@@ -18,9 +18,9 @@ public class Menu {
         int option, volume, numberTracks, amount;
         Boolean availability;
         String name, author, yearPublication, edition, isbn, bookPublisher, gender, cpf, historyLoan;
-        Book book;
-        Magazine magazine;
-        Cd cd;
+        Book book = null;
+        Magazine magazine = null;
+        Cd cd = null;
         LibraryUser user;
         
         while(true){
@@ -159,13 +159,63 @@ public class Menu {
                     }
                     break;
                 case 3:
-                    System.out.println("----------- Borrow -----------");
+                    System.out.println("----------- Borrow -----------"
+                    + "\n1 - Book"
+                    + "\n2 - Magazine"
+                    + "\n3 - Cd"
+                    + "\n-----------------------------------------------"
+                    + "\nEnter the desired option:");
+            
+                    option = sc.nextInt();
+                    sc.nextLine();
+                    switch(option){
+                        default:
+                            break;
+                        case 1:
+                            book.lendItem();
+                            break;
+                        case 2:
+                            magazine.lendItem();
+                            break;
+                        case 3:
+                            cd.lendItem();
+                            break;
+                    }
                     break;
                 case 4:
-                    System.out.println("----------- Give back -----------");
+                    System.out.println("----------- Give back -----------"
+                    + "\n1 - Book"
+                    + "\n2 - Magazine"
+                    + "\n3 - Cd"
+                    + "\n-----------------------------------------------"
+                    + "\nEnter the desired option:");
+            
+                    option = sc.nextInt();
+                    sc.nextLine();
+                    switch(option){
+                        default:
+                            break;
+                        case 1:
+                            book.returnItem();
+                            break;
+                        case 2:
+                            magazine.returnItem();
+                            break;
+                        case 3:
+                            cd.returnItem();
+                            break;
+                    }
                     break;
                 case 5:
-                    System.out.println("----------- Check user's loan history -----------");
+                    System.out.println("----------- Check user's loan history -----------"
+                            + "What's the user cpf?");
+                    cpf = sc.nextLine();
+                    for(LibraryUser ur : users){
+                        if(cpf.equalsIgnoreCase(ur.getCpf())){
+                            System.out.println("Loan History for " + ur.getName());
+                        }
+                    }
+                    
                     break;
   
             }
