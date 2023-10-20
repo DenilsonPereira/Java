@@ -3,6 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package application;
+import entities.LibraryUser;
+import entities.LibraryItem;
+import entities.Cd;
+import entities.Book;
+import entities.Magazine;
 import java.util.Scanner;
 import java.util.ArrayList;
 /**
@@ -30,6 +35,7 @@ public class Menu {
                     + "\n3 - Borrow"
                     + "\n4 - Give back"
                     + "\n5 - Check user's loan history"
+                    + "\n6 - List library items"
                     + "\n0 - Exit"
                     + "\n--------------------------------------"
                     + "\nEnter the desired option:");
@@ -217,6 +223,13 @@ public class Menu {
                     }
                     
                     break;
+                case 6:
+                    System.out.println("----------- List library items -----------");
+                    for(LibraryItem l : library){
+                        System.out.println(l.getName());
+                    }
+                    break;
+                    
   
             }
         }
