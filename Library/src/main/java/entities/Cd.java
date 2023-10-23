@@ -40,13 +40,23 @@ public class Cd extends LibraryItem implements LoanManagement{
         this.amount = amount;
     }
     
-    @Override
+@Override
     public void checkAvailability(){
+        int ava = getAmount();
+        if(ava>0){
+            return "Disponível";
+        }else{
+            return "Indisponível";
+        }
+    }
+
+    @Override
+    public void lendItem() {
+        setAvailability(false);
     }
     
     @Override
-    public void lendItem() {}
-    
-    @Override
-    public void returnItem(){}
+    public void returnItem(){
+        setAvailability(true);
+    }
 }

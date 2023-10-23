@@ -24,12 +24,21 @@ public class Magazine extends LibraryItem implements LoanManagement{
     
     @Override
     public void checkAvailability(){
+        Boolean ava = getAvailability();
+        if(ava==true){
+            return "Disponível";
+        }else{
+            return "Indisponível";
+        }
+    }
+
+    @Override
+    public void lendItem() {
+        setAvailability(false);
     }
     
-    
     @Override
-    public void lendItem() {}
-    
-    @Override
-    public void returnItem(){}
+    public void returnItem(){
+        setAvailability(true);
+    }
 }

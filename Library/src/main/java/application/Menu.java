@@ -22,14 +22,14 @@ public class Menu {
         ArrayList<LibraryUser> users = new ArrayList<LibraryUser>();
         int option, volume, numberTracks, amount;
         Boolean availability;
-        String name, author, yearPublication, edition, isbn, bookPublisher, gender, cpf, historyLoan;
+        String name, author, yearPublication, edition, isbn, bookPublisher, gender, cpf, historyLoan, a;
         Book book = null;
         Magazine magazine = null;
         Cd cd = null;
         LibraryUser user;
         
         while(true){
-            System.out.println("----------- Library System -----------"
+            System.out.println("\n----------- Library System -----------"
                     + "\n1 - Register User"
                     + "\n2 - Register library item"
                     + "\n3 - Borrow"
@@ -178,13 +178,49 @@ public class Menu {
                         default:
                             break;
                         case 1:
-                            book.lendItem();
+                            System.out.println("Enter the name of the book: ");
+                            name = sc.nextLine();
+                            
+                            for(LibraryItem li : library){
+                                Book b = (Book) li;
+                                if(name==b.getName()){
+                                    if(b.getAvailability()==true){
+                                        b.lendItem();
+                                    }else{
+                                        System.out.println("The book is not availability! ");
+                                    }
+                                }
+                            }
                             break;
                         case 2:
-                            magazine.lendItem();
+                            System.out.println("Enter the name of the magazine: ");
+                            name = sc.nextLine();
+                            
+                            for(LibraryItem li : library){
+                                Magazine m = (Magazine) li;
+                                if(name==m.getName()){
+                                    if(m.getAvailability()==true){
+                                        m.lendItem();
+                                    }else{
+                                        System.out.println("The magazine is not availability! ");
+                                    }
+                                }
+                            }
                             break;
                         case 3:
-                            cd.lendItem();
+                            System.out.println("Enter the name of the CD: ");
+                            name = sc.nextLine();
+                            
+                            for(LibraryItem li : library){
+                                Cd c = (Cd) li;
+                                if(name==c.getName()){
+                                    if(c.getAmount()>0){
+                                        cd.lendItem();
+                                    }else{
+                                        System.out.println("The cd is not availability! ");
+                                    }
+                                }
+                            }
                             break;
                     }
                     break;
@@ -202,13 +238,49 @@ public class Menu {
                         default:
                             break;
                         case 1:
-                            book.returnItem();
+                            System.out.println("Enter the name of the book: ");
+                            name = sc.nextLine();
+                            
+                            for(LibraryItem li : library){
+                                Book b = (Book) li;
+                                if(name==b.getName()){
+                                    if(b.getAvailability()==false){
+                                        b.returnItem();
+                                    }else{
+                                        System.out.println("The book is availability! ");
+                                    }
+                                }
+                            }
                             break;
                         case 2:
-                            magazine.returnItem();
-                            break;
+                            System.out.println("Enter the name of the magazine: ");
+                            name = sc.nextLine();
+                            
+                            for(LibraryItem li : library){
+                                Magazine m = (Magazine) li;
+                                if(name==m.getName()){
+                                    if(m.getAvailability()==false){
+                                        m.returnItem();
+                                    }else{
+                                        System.out.println("The magazine is availability! ");
+                                    }
+                                }
+                            }
                         case 3:
-                            cd.returnItem();
+                            System.out.println("Enter the name of the CD: ");
+                            name = sc.nextLine();
+                            
+                            for(LibraryItem li : library){
+                                Cd c = (Cd) li;
+                                if(name==c.getName()){
+                                    if(c.getAmount()==0){
+                                        cd.returnItem();
+                                    }else{
+                                        System.out.println("The cd is availability! ");
+                                    }
+                                }
+                            }
+                            
                             break;
                     }
                     break;
@@ -226,7 +298,24 @@ public class Menu {
                 case 6:
                     System.out.println("----------- List library items -----------");
                     for(LibraryItem l : library){
-                        System.out.println(l.getName());
+                        if(l.getAvailability()==true){
+                            a = "Disponivel";
+                        }else{
+                            a = "Indisponivel";
+                        }
+                        if(l instanceof Book){
+                            Book b = (Book) l;
+                            System.out.printf("Name: %s \nAuthor: %s \nYear publication: %s \nAvailability(): %s \nISBN: %s \nBook Publisher: %s \nGender:", b.getName(), b.getAuthor(), b.getYearPublication(), b.getAvailability(), b.getIsbn(), b.getBookPublisher(), b.getGender());
+                            
+                        }else if(l instanceof Magazine){
+                            Magazine m = (Magazine) l;
+                            System.out.printf("Name: %s \nAuthor: %s \nYear publication: %s \nAvailability(): %s \nEdition: %s", m.getName(), m.getAuthor(), m.getYearPublication(), m.getAvailability(), m.getEdition());
+                            
+                            
+                        }else if(l instanceof Cd){
+                            Cd c = (Cd) l;
+                            System.out.printf("Name: %s \nAuthor: %s \nYear publication: %s \nAvailability(): %s \nVolume: %s \nNumber tracks: %s \nAmount: %s", c.getName(), c.getAuthor(), c.getYearPublication(), c.getAvailability(), c.getVolume(), c.getNumberTracks(), c.getAmount());
+                        }
                     }
                     break;
                     
