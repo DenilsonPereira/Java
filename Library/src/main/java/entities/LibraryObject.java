@@ -8,11 +8,11 @@ package entities;
  *
  * @author Denilson
  */
-public abstract class LibraryItem {
+public abstract class LibraryObject {
     private String name, author, yearPublication;
     private Boolean availability;
     
-    public LibraryItem(String name, String author, String yearPublication, Boolean availability){
+    public LibraryObject(String name, String author, String yearPublication, Boolean availability){
         this.name = name;
         this.author = author;
         this.yearPublication = yearPublication;

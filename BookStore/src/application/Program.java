@@ -1,41 +1,37 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package application;
-import entities.LibraryUser;
-import entities.LibraryObject;
+
+import entities.User;
+import entities.Seller;
+import entities.Client;
+import entities.BookstoreItem;
 import entities.Cd;
 import entities.Book;
 import entities.Magazine;
 import java.util.Scanner;
 import java.util.ArrayList;
-/**
- *
- * @author Denilson
- */
-public class Menu {
-    public static void main(String[] args){
-        
-        Scanner sc = new Scanner(System.in);
-        ArrayList<LibraryObject> library = new ArrayList<LibraryObject>();
-        ArrayList<LibraryUser> users = new ArrayList<LibraryUser>();
+
+public class Program {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+        ArrayList<BookstoreItem> item = new ArrayList<BookstoreItem>();
+        ArrayList<User> users = new ArrayList<User>();
         int option, volume, numberTracks, amount;
         Boolean availability;
         String name, author, yearPublication, edition, isbn, bookPublisher, gender, cpf, historyLoan, a;
         Book book = null;
         Magazine magazine = null;
         Cd cd = null;
-        LibraryUser user;
+        User user;
         
         while(true){
-            System.out.println("\n----------- Library System -----------"
+            System.out.println("\n----------- Bookstore System -----------"
                     + "\n1 - Register User"
-                    + "\n2 - Register library item"
-                    + "\n3 - Borrow"
+                    + "\n2 - Register bookstore item"
+                    + "\n3 - Sell"
                     + "\n4 - Give back"
-                    + "\n5 - Check user's loan history"
-                    + "\n6 - List library items"
+                    + "\n5 - Seller's sales history"
+                    + "\n6 - List bookstore items"
                     + "\n0 - Exit"
                     + "\n--------------------------------------"
                     + "\nEnter the desired option:");
@@ -60,7 +56,7 @@ public class Menu {
                     
                     historyLoan = "";
                     
-                    user = new LibraryUser(name, cpf, historyLoan);
+                    user = new User(name, cpf, historyLoan);
                     
                     users.add(user);
                     
@@ -69,7 +65,7 @@ public class Menu {
                     break;
                     
                 case 2:
-                    System.out.println("------------ Register Library Item ------------"
+                    System.out.println("------------ Register Bookstore Item ------------"
                     + "\n1 - Register Book"
                     + "\n2 - Register Magazine"
                     + "\n3 - Register Cd"
@@ -104,7 +100,7 @@ public class Menu {
                             gender = sc.nextLine();
                             
                             book = new Book(name, author, yearPublication, availability, isbn, bookPublisher, gender);
-                            library.add(book);
+                            item.add(book);
                             
                             System.out.println("\nBook registered successfully!" 
                             + "\n-----------------------------------------");
@@ -126,7 +122,7 @@ public class Menu {
                             edition = sc.nextLine();
                             
                             magazine = new Magazine(name, author, yearPublication, availability, edition);
-                            library.add(magazine);
+                            item.add(magazine);
                             
                             System.out.println("\nMagazine registered successfully!" 
                             + "\n-----------------------------------------");
@@ -158,14 +154,14 @@ public class Menu {
                             
                             cd = new Cd(name, author, yearPublication, availability, volume, numberTracks, amount);
                             
-                            library.add(cd);
+                            item.add(cd);
                             System.out.println("\nCd registered successfully!" 
                             + "\n-----------------------------------------");
                             break;
                     }
                     break;
                 case 3:
-                    System.out.println("----------- Borrow -----------"
+                    System.out.println("----------- Sell -----------"
                     + "\n1 - Book"
                     + "\n2 - Magazine"
                     + "\n3 - Cd"
@@ -181,11 +177,11 @@ public class Menu {
                             System.out.println("Enter the name of the book: ");
                             name = sc.nextLine();
                             
-                            for(LibraryObject li : library){
+                            for(BookstoreItem li : item){
                                 Book b = (Book) li;
                                 if(name==b.getName()){
                                     if(b.getAvailability()==true){
-                                        b.lendItem();
+                                        b.sellItem();
                                     }else{
                                         System.out.println("The book is not availability! ");
                                     }
@@ -196,11 +192,11 @@ public class Menu {
                             System.out.println("Enter the name of the magazine: ");
                             name = sc.nextLine();
                             
-                            for(LibraryObject li : library){
+                            for(BookstoreItem li : item){
                                 Magazine m = (Magazine) li;
                                 if(name==m.getName()){
                                     if(m.getAvailability()==true){
-                                        m.lendItem();
+                                        m.sellItem();
                                     }else{
                                         System.out.println("The magazine is not availability! ");
                                     }
@@ -211,11 +207,11 @@ public class Menu {
                             System.out.println("Enter the name of the CD: ");
                             name = sc.nextLine();
                             
-                            for(LibraryObject li : library){
+                            for(BookstoreItem li : item){
                                 Cd c = (Cd) li;
                                 if(name==c.getName()){
                                     if(c.getAmount()>0){
-                                        cd.lendItem();
+                                        cd.sellItem();
                                     }else{
                                         System.out.println("The cd is not availability! ");
                                     }
@@ -241,7 +237,7 @@ public class Menu {
                             System.out.println("Enter the name of the book: ");
                             name = sc.nextLine();
                             
-                            for(LibraryObject li : library){
+                            for(BookstoreItem li : item){
                                 Book b = (Book) li;
                                 if(name==b.getName()){
                                     if(b.getAvailability()==false){
@@ -256,7 +252,7 @@ public class Menu {
                             System.out.println("Enter the name of the magazine: ");
                             name = sc.nextLine();
                             
-                            for(LibraryObject li : library){
+                            for(BookstoreItem li : item){
                                 Magazine m = (Magazine) li;
                                 if(name==m.getName()){
                                     if(m.getAvailability()==false){
@@ -270,7 +266,7 @@ public class Menu {
                             System.out.println("Enter the name of the CD: ");
                             name = sc.nextLine();
                             
-                            for(LibraryObject li : library){
+                            for(BookstoreItem li : item){
                                 Cd c = (Cd) li;
                                 if(name==c.getName()){
                                     if(c.getAmount()==0){
@@ -285,10 +281,10 @@ public class Menu {
                     }
                     break;
                 case 5:
-                    System.out.println("----------- Check user's loan history -----------"
-                            + "What's the user cpf?");
+                    System.out.println("----------- Seller's sales history -----------"
+                            + "What's the seller cpf?");
                     cpf = sc.nextLine();
-                    for(LibraryUser ur : users){
+                    for(User ur : users){
                         if(cpf.equalsIgnoreCase(ur.getCpf())){
                             System.out.println("Loan History for " + ur.getName());
                         }
@@ -296,8 +292,8 @@ public class Menu {
                     
                     break;
                 case 6:
-                    System.out.println("----------- List library items -----------");
-                    for(LibraryObject l : library){
+                    System.out.println("----------- List bookstore items -----------");
+                    for(BookstoreItem l : item){
                         if(l.getAvailability()==true){
                             a = "Disponivel";
                         }else{

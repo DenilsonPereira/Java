@@ -1,16 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package entities;
 
-import entities.LoanManagement;
-
-/**
- *
- * @author Denilson
- */
-public class Cd extends LibraryObject implements LoanManagement{
+public class Cd extends BookstoreItem implements SalesManager{
     public int volume, numberTracks, amount;
     public Cd(String name, String author, String yearPublication, Boolean availability, int volume, int numberTracks, int amount){
         super(name, author, yearPublication, availability);
@@ -40,23 +30,21 @@ public class Cd extends LibraryObject implements LoanManagement{
         this.amount = amount;
     }
     
-@Override
+    @Override
     public void checkAvailability(){
         int ava = getAmount();
         if(ava>0){
-            
         }else{
-            
         }
-    }
-
-    @Override
-    public void lendItem() {
-        
     }
     
     @Override
     public void returnItem(){
-        
     }
+
+	@Override
+	public void sellItem() {
+		// TODO Auto-generated method stub
+		
+	}
 }

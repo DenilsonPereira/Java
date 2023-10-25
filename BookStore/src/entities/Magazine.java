@@ -1,14 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package entities;
 
-/**
- *
- * @author Denilson
- */
-public class Magazine extends LibraryObject implements LoanManagement{
+public class Magazine extends BookstoreItem implements SalesManager{
     private String edition;
     public Magazine(String name, String author, String yearPublication, Boolean availability, String edition){
         super(name, author, yearPublication, availability);
@@ -26,19 +18,17 @@ public class Magazine extends LibraryObject implements LoanManagement{
     public void checkAvailability(){
         Boolean ava = getAvailability();
         if(ava==true){
-            
         }else{
-            
         }
-    }
-
-    @Override
-    public void lendItem() {
-        
     }
     
     @Override
     public void returnItem(){
-        
     }
+
+	@Override
+	public void sellItem() {
+		// TODO Auto-generated method stub
+		
+	}
 }
