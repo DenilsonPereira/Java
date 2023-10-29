@@ -2,15 +2,18 @@ package entities;
 
 public abstract class BookstoreItem {
 
-
+	private int amount;
+	private double price;
 	private String name, author, yearPublication;
     private Boolean availability;
     
-    public BookstoreItem(String name, String author, String yearPublication, Boolean availability){
+    public BookstoreItem(String name, String author, String yearPublication, Boolean availability, int amount, double price){
         this.name = name;
         this.author = author;
         this.yearPublication = yearPublication;
         this.availability = availability;
+        this.amount = amount;
+        this.price = price;
     }
     
     public String getName(){
@@ -24,6 +27,12 @@ public abstract class BookstoreItem {
     }
     public Boolean getAvailability(){
         return availability;
+    }
+    public int getAmount() {
+    	return amount;
+    }
+    public double getPrice() {
+    	return price;
     }
     
     public abstract void checkAvailability();

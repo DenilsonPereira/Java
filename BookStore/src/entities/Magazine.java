@@ -2,8 +2,8 @@ package entities;
 
 public class Magazine extends BookstoreItem implements SalesManager{
     private String edition;
-    public Magazine(String name, String author, String yearPublication, Boolean availability, String edition){
-        super(name, author, yearPublication, availability);
+    public Magazine(String name, String author, String yearPublication, Boolean availability, int amount, double price, String edition){
+        super(name, author, yearPublication, availability, amount, price);
         this.edition = edition;
     }
     

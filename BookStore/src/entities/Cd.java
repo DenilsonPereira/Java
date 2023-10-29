@@ -1,12 +1,10 @@
 package entities;
 
 public class Cd extends BookstoreItem implements SalesManager{
-    public int volume, numberTracks, amount;
-    public Cd(String name, String author, String yearPublication, Boolean availability, int volume, int numberTracks, int amount){
-        super(name, author, yearPublication, availability);
+    public int volume;
+    public Cd(String name, String author, String yearPublication, Boolean availability, int amount, double price, int volume){
+        super(name, author, yearPublication, availability, amount, price);
         this.volume = volume;
-        this.numberTracks = numberTracks;
-        this.amount = amount;
     }
     
     public int getVolume(){
@@ -14,20 +12,6 @@ public class Cd extends BookstoreItem implements SalesManager{
     }
     public void setVolume(int volume){
         this.volume = volume;
-    }
-    
-    public int getNumberTracks(){
-        return numberTracks;
-    }
-    public void setNumberTracks(int numberTracks){
-        this.numberTracks = numberTracks;
-    }
-    
-    public int getAmount(){
-        return amount;
-    }
-    public void setAmount(int amount){
-        this.amount = amount;
     }
     
     @Override

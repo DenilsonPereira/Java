@@ -1,11 +1,10 @@
 package entities;
 
 public class Book extends BookstoreItem implements SalesManager{
-    private String isbn, bookPublisher, gender;
-    public Book(String name, String author, String yearPublication,Boolean availability, String isbn, String bookPublisher, String gender){
-        super(name, author, yearPublication, availability);
+    private String isbn, gender;
+    public Book(String name, String author, String yearPublication,Boolean availability, int amount, double price, String isbn, String gender){
+        super(name, author, yearPublication, availability,amount,price);
         this.isbn = isbn;
-        this.bookPublisher = bookPublisher;
         this.gender = gender;
     }
     
@@ -14,13 +13,6 @@ public class Book extends BookstoreItem implements SalesManager{
     }
     public void setIsbn(String isbn){
         this.isbn = isbn;
-    }
-    
-    public String getBookPublisher(){
-        return bookPublisher;
-    }
-    public void setBookPublisher(String bookPublisher){
-        this.bookPublisher = bookPublisher;
     }
     
     public String getGender(){
