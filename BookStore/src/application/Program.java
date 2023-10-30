@@ -11,19 +11,12 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Program {
-
+	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
         ArrayList<BookstoreItem> item = new ArrayList<BookstoreItem>();
         ArrayList<User> users = new ArrayList<User>();
-        int option, volume, amount;
-        double price;
-        Boolean availability;
-        String name, author, yearPublication, edition, isbn, gender, cpf, historyLoan,a;
-        Book book = null;
-        Magazine magazine = null;
-        Cd cd = null;
-        User user;
+        int option;
         
         while(true){
             System.out.println("\n----------- Bookstore System -----------"
@@ -221,167 +214,194 @@ public class Program {
 
     private static void sellItem(Scanner sc, ArrayList<BookstoreItem> items) {
     	
-//    	System.out.println("----------- Sell -----------"
-//                + "\n1 - Book"
-//                + "\n2 - Magazine"
-//                + "\n3 - Cd"
-//                + "\n-----------------------------------------------"
-//                + "\nEnter the desired option:");
-//        
-//                option = sc.nextInt();
-//                sc.nextLine();
-//                switch(option){
-//                    default:
-//                        break;
-//                    case 1:
-//                        System.out.println("Enter the name of the book: ");
-//                        name = sc.nextLine();
-//                        
-//                        for(BookstoreItem li : item){
-//                            Book b = (Book) li;
-//                            if(name==b.getName()){
-//                                if(b.getAvailability()==true){
-//                                    b.sellItem();
-//                                }else{
-//                                    System.out.println("The book is not availability! ");
-//                                }
-//                            }
-//                        }
-//                        break;
-//                    case 2:
-//                        System.out.println("Enter the name of the magazine: ");
-//                        name = sc.nextLine();
-//                        
-//                        for(BookstoreItem li : item){
-//                            Magazine m = (Magazine) li;
-//                            if(name==m.getName()){
-//                                if(m.getAvailability()==true){
-//                                    m.sellItem();
-//                                }else{
-//                                    System.out.println("The magazine is not availability! ");
-//                                }
-//                            }
-//                        }
-//                        break;
-//                    case 3:
-//                        System.out.println("Enter the name of the CD: ");
-//                        name = sc.nextLine();
-//                        
-//                        for(BookstoreItem li : item){
-//                            Cd c = (Cd) li;
-//                            if(name==c.getName()){
-//                                if(c.getAmount()>0){
-//                                    cd.sellItem();
-//                                }else{
-//                                    System.out.println("The cd is not availability! ");
-//                                }
-//                            }
-//                        }
-//                        break;
-//                }
+    	System.out.println("----------- Sell -----------"
+                + "\n1 - Book"
+                + "\n2 - Magazine"
+                + "\n3 - Cd"
+                + "\n-----------------------------------------------"
+                + "\nEnter the desired option:");
+        
+                int option = sc.nextInt();
+                sc.nextLine();
+                switch(option){
+                    default:
+                        break;
+                    case 1:
+    	
+                        sellBook(sc, items);
+                        break;
+    	
+                    case 2:
+    	
+                        sellMagazine(sc, items);
+                        break;
+    	
+                    case 3:
+                        sellCd(sc, items);
+                        break;
+                }
     	
     }
-
+    
+    private static void sellBook(Scanner sc, ArrayList<BookstoreItem> item) {
+    	System.out.println("Enter the name of the book: ");
+    	String name = sc.nextLine();
+      
+    	for(BookstoreItem li : item){
+    		Book b = (Book) li;
+    		if(name==b.getName()){
+    			if(b.getAvailability()==true){
+    				b.sellItem();
+    			}else{
+                  System.out.println("The book is not availability! ");
+    			}
+    		}
+    	}
+    }
+    
+    private static void sellMagazine(Scanner sc, ArrayList<BookstoreItem> item) {
+    	System.out.println("Enter the name of the magazine: ");
+	    String name = sc.nextLine();
+	      
+	      for(BookstoreItem li : item){
+	          Magazine m = (Magazine) li;
+	          if(name==m.getName()){
+	              if(m.getAvailability()==true){
+	                  m.sellItem();
+	              }else{
+	                  System.out.println("The magazine is not availability! ");
+	              }
+	          }
+	      }
+    }
+    
+    private static void sellCd(Scanner sc, ArrayList<BookstoreItem> item) {
+    	System.out.println("Enter the name of the CD: ");
+	    String name = sc.nextLine();
+	      
+	    for(BookstoreItem li : item){
+	         Cd c = (Cd) li;
+	         if(name==c.getName()){
+	              if(c.getAmount()>0){
+	                  c.sellItem();
+	              }else{
+	                  System.out.println("The cd is not availability! ");
+	              }
+	          }
+	      }
+    }
+    
     private static void giveBackItem(Scanner sc, ArrayList<BookstoreItem> items) {
     	
-//    	System.out.println("----------- Give back -----------"
-//                + "\n1 - Book"
-//                + "\n2 - Magazine"
-//                + "\n3 - Cd"
-//                + "\n-----------------------------------------------"
-//                + "\nEnter the desired option:");
-//        
-//                option = sc.nextInt();
-//                sc.nextLine();
-//                switch(option){
-//                    default:
-//                        break;
-//                    case 1:
-//                        System.out.println("Enter the name of the book: ");
-//                        name = sc.nextLine();
-//                        
-//                        for(BookstoreItem li : item){
-//                            Book b = (Book) li;
-//                            if(name==b.getName()){
-//                                if(b.getAvailability()==false){
-//                                    b.returnItem();
-//                                }else{
-//                                    System.out.println("The book is availability! ");
-//                                }
-//                            }
-//                        }
-//                        break;
-//                    case 2:
-//                        System.out.println("Enter the name of the magazine: ");
-//                        name = sc.nextLine();
-//                        
-//                        for(BookstoreItem li : item){
-//                            Magazine m = (Magazine) li;
-//                            if(name==m.getName()){
-//                                if(m.getAvailability()==false){
-//                                    m.returnItem();
-//                                }else{
-//                                    System.out.println("The magazine is availability! ");
-//                                }
-//                            }
-//                        }
-//                    case 3:
-//                        System.out.println("Enter the name of the CD: ");
-//                        name = sc.nextLine();
-//                        
-//                        for(BookstoreItem li : item){
-//                            Cd c = (Cd) li;
-//                            if(name==c.getName()){
-//                                if(c.getAmount()==0){
-//                                    cd.returnItem();
-//                                }else{
-//                                    System.out.println("The cd is availability! ");
-//                                }
-//                            }
-//                        }
-//                        
-//                        break;
-//                }
+    	System.out.println("----------- Give back -----------"
+                + "\n1 - Book"
+                + "\n2 - Magazine"
+                + "\n3 - Cd"
+                + "\n-----------------------------------------------"
+                + "\nEnter the desired option:");
+        
+                int option = sc.nextInt();
+                sc.nextLine();
+                switch(option){
+                    default:
+                        break;
+                    case 1:
+                    	giveBackBook(sc,items);
+                        break;
+                    case 2:
+                        giveBackMagazine(sc, items);
+                        break;
+                    case 3:
+                    	giveBackCd(sc, items);
+                    	break;
+                }
     	
     }
-
+                
+    private static void giveBackBook(Scanner sc, ArrayList<BookstoreItem> item) {
+	      System.out.println("Enter the name of the book: ");
+	      String name = sc.nextLine();
+	      
+	      for(BookstoreItem li : item){
+	          Book b = (Book) li;
+	          if(name==b.getName()){
+	              if(b.getAvailability()==false){
+	                  b.returnItem();
+	              }else{
+	                  System.out.println("The book is availability! ");
+	              }
+	          }
+	      }
+    }
+    
+    private static void giveBackMagazine(Scanner sc, ArrayList<BookstoreItem> item) {
+    	System.out.println("Enter the name of the magazine: ");
+	    String name = sc.nextLine();
+	      
+	    for(BookstoreItem li : item){
+	          Magazine m = (Magazine) li;
+	          if(name==m.getName()){
+	              if(m.getAvailability()==false){
+	                  m.returnItem();
+	              }else{
+	                  System.out.println("The magazine is availability! ");
+	              }
+	          }
+	    }
+    }
+    
+    private static void giveBackCd(Scanner sc, ArrayList<BookstoreItem> item) {
+    	System.out.println("Enter the name of the CD: ");
+    	String name = sc.nextLine();
+	      
+	    for(BookstoreItem li : item){
+	          Cd c = (Cd) li;
+	          if(name==c.getName()){
+	              if(c.getAmount()==0){
+	                  c.returnItem();
+	              }else{
+	                  System.out.println("The cd is availability! ");
+	              }
+	          }
+	    }
+    }
+    
     private static void salesHistory(Scanner sc, ArrayList<User> users) {
 
     	
-//        System.out.println("----------- Seller's sales history -----------"
-//                + "What's the seller cpf?");
-//        cpf = sc.nextLine();
-//        for(User ur : users){
-//            if(cpf.equalsIgnoreCase(ur.getCpf())){
-//                System.out.println("Loan History for " + ur.getName());
-//            }
-//        }
+        System.out.println("----------- Seller's sales history -----------"
+                + "What's the seller cpf?");
+        String cpf = sc.nextLine();
+        for(User ur : users){
+            if(cpf.equalsIgnoreCase(ur.getCpf())){
+                System.out.println("Loan History for " + ur.getName());
+            }
+        }
     	
     }
 
     private static void listBookstoreItems(ArrayList<BookstoreItem> items) {
     	
-//    	System.out.println("----------- List bookstore items -----------");
-//        for(BookstoreItem l : item){
-//            if(l.getAvailability()==true){
-//                a = "Disponivel";
-//            }else{
-//                a = "Indisponivel";
-//            }
-//            if(l instanceof Book){
-//                Book b = (Book) l;
-//                System.out.printf("Name: %s \nAuthor: %s \nYear publication: %s \nAvailability(): %s \nAmount: %s \nPrice: %s \nISBN: %s \nGender: %s", b.getName(), b.getAuthor(), b.getYearPublication(), b.getAvailability(), b.getAmount(), b.getPrice(), b.getIsbn(), b.getGender());
-//                
-//            }else if(l instanceof Magazine){
-//                Magazine m = (Magazine) l;
-//                System.out.printf("Name: %s \nAuthor: %s \nYear publication: %s \nAvailability(): %s \nAmount: %s \nPrice: %s \nEdition: %s", m.getName(), m.getAuthor(), m.getYearPublication(), m.getAvailability(), m.getAmount(), m.getPrice(), m.getEdition());
-//                
-//                
-//            }else if(l instanceof Cd){
-//                Cd c = (Cd) l;
-//                System.out.printf("Name: %s \nAuthor: %s \nYear publication: %s \nAvailability(): %s \nAmount: %s \nPrice: %s \nVolume: %s", c.getName(), c.getAuthor(), c.getYearPublication(), c.getAvailability(), c.getAmount(), c.getPrice(), c.getVolume());
-//            }
-//        }
-    	
+    	System.out.println("----------- List bookstore items -----------");
+    	String a;
+        for(BookstoreItem l : items){
+            if(l.getAvailability()==true){
+                a = "Disponivel";
+            }else{
+                a = "Indisponivel";
+            }
+            if(l instanceof Book){
+                Book b = (Book) l;
+                b.toString();
+                
+            }else if(l instanceof Magazine){
+                Magazine m = (Magazine) l;
+                m.toString();
+                
+            }else if(l instanceof Cd){
+                Cd c = (Cd) l;
+                c.toString();
+            }
+        }
     }
 }

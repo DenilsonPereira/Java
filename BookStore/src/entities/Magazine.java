@@ -31,4 +31,11 @@ public class Magazine extends BookstoreItem implements SalesManager{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public String toString() {
+		return "Name: " + this.getName() + "\nAuthor: " + this.getAuthor() + "\nYear publication: "
+		+ this.getYearPublication() + "\nAvailability: " + this.getAvailability() + "\nAmount: "
+		+ this.getAmount() + "\nPrice: " + this.getPrice() + "\nEdition: " + this.getEdition();
+	}
 }
