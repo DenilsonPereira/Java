@@ -244,14 +244,17 @@ public class Program {
     }
     
     private static void sellBook(Scanner sc, ArrayList<BookstoreItem> item) {
-    	System.out.println("Enter the name of the book: ");
-    	String name = sc.nextLine();
+    	System.out.println("Enter the isbn of the book: ");
+    	String isbn = sc.nextLine();
       
     	for(BookstoreItem li : item){
     		Book b = (Book) li;
-    		if(name==b.getName()){
+    		if(isbn.equalsIgnoreCase(b.getIsbn())){
     			if(b.getAvailability()==true){
-    				b.sellItem();
+    				System.out.printf("Tell us how many books %s wants to buy?", b.getName());
+    				int sellB = sc.nextInt();
+    				sc.nextLine();
+    				b.sellItem(sellB);
     			}else{
                   System.out.println("The book is not availability! ");
     			}
@@ -265,9 +268,12 @@ public class Program {
 	      
 	      for(BookstoreItem li : item){
 	          Magazine m = (Magazine) li;
-	          if(name==m.getName()){
+	          if(name.equalsIgnoreCase(m.getName())){
 	              if(m.getAvailability()==true){
-	                  m.sellItem();
+	            	  System.out.printf("Tell us how many magazines %s wants to buy?", m.getName());
+	            	  int sellM = sc.nextInt();
+	            	  sc.nextLine();
+	                  m.sellItem(sellM);
 	              }else{
 	                  System.out.println("The magazine is not availability! ");
 	              }
@@ -281,9 +287,12 @@ public class Program {
 	      
 	    for(BookstoreItem li : item){
 	         Cd c = (Cd) li;
-	         if(name==c.getName()){
+	         if(name.equalsIgnoreCase(c.getName())){
 	              if(c.getAmount()>0){
-	                  c.sellItem();
+	            	  System.out.printf("Tell us how many cd's %s wants to buy?", c.getName());
+	            	  int sellC = sc.nextInt();
+	            	  sc.nextLine();
+	                  c.sellItem(sellC);
 	              }else{
 	                  System.out.println("The cd is not availability! ");
 	              }
@@ -319,20 +328,23 @@ public class Program {
     }
                 
     private static void giveBackBook(Scanner sc, ArrayList<BookstoreItem> item) {
-	      System.out.println("Enter the name of the book: ");
-	      String name = sc.nextLine();
+	      System.out.println("Enter the isbn of the book: ");
+	      String isbn = sc.nextLine();
 	      
 	      for(BookstoreItem li : item){
 	          Book b = (Book) li;
-	          if(name==b.getName()){
-	              if(b.getAvailability()==false){
-	                  b.returnItem();
-	              }else{
-	                  System.out.println("The book is availability! ");
-	              }
+	          if(isbn.equalsIgnoreCase(b.getIsbn())){
+	        	  
+	             System.out.printf("How many %s books do you want to return?", b.getName());
+	             int bookReturn = sc.nextInt();
+	             sc.nextLine();
+	             b.returnItem(bookReturn);
+	             
+	          }else{
+	             System.out.println("The isbn of the book provided does not exist!");
 	          }
 	      }
-    }
+	}
     
     private static void giveBackMagazine(Scanner sc, ArrayList<BookstoreItem> item) {
     	System.out.println("Enter the name of the magazine: ");
@@ -340,12 +352,13 @@ public class Program {
 	      
 	    for(BookstoreItem li : item){
 	          Magazine m = (Magazine) li;
-	          if(name==m.getName()){
-	              if(m.getAvailability()==false){
-	                  m.returnItem();
-	              }else{
-	                  System.out.println("The magazine is availability! ");
-	              }
+	          if(name.equalsIgnoreCase(m.getName())){
+	        	  System.out.printf("How many %s books do you want to return?", m.getName());
+	        	  int magazineReturn = sc.nextInt();
+		          sc.nextLine();
+	              m.returnItem(magazineReturn);
+	          }else{
+	                  System.out.println("The name of the magazine provided does not exist!");
 	          }
 	    }
     }
@@ -356,12 +369,13 @@ public class Program {
 	      
 	    for(BookstoreItem li : item){
 	          Cd c = (Cd) li;
-	          if(name==c.getName()){
-	              if(c.getAmount()==0){
-	                  c.returnItem();
-	              }else{
-	                  System.out.println("The cd is availability! ");
-	              }
+	          if(name.equalsIgnoreCase(c.getName())){
+	        	  System.out.printf("How many %s books do you want to return?", c.getName());
+	        	  int cdReturn = sc.nextInt();
+	        	  sc.nextLine();
+	              c.returnItem(cdReturn);
+	          }else{
+	                  System.out.println("The name of the cd provided does not exist!");
 	          }
 	    }
     }
@@ -383,24 +397,18 @@ public class Program {
     private static void listBookstoreItems(ArrayList<BookstoreItem> items) {
     	
     	System.out.println("----------- List bookstore items -----------");
-    	String a;
         for(BookstoreItem l : items){
-            if(l.getAvailability()==true){
-                a = "Disponivel";
-            }else{
-                a = "Indisponivel";
-            }
             if(l instanceof Book){
                 Book b = (Book) l;
-                b.toString();
+                System.out.println(b.toString());
                 
             }else if(l instanceof Magazine){
                 Magazine m = (Magazine) l;
-                m.toString();
+                System.out.println(m.toString());
                 
             }else if(l instanceof Cd){
                 Cd c = (Cd) l;
-                c.toString();
+                System.out.println(c.toString());
             }
         }
     }

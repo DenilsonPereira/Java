@@ -19,20 +19,28 @@ public class Cd extends BookstoreItem implements SalesManager {
 
 	@Override
 	public void checkAvailability() {
-		int ava = getAmount();
-		if (ava > 0) {
+		if (getAmount() > 0) {
+			Cd.this.setAvailability(true);
 		} else {
+			Cd.this.setAvailability(false);
 		}
 	}
 
 	@Override
-	public void returnItem() {
+	public void returnItem(int q) {
+		Cd.this.setAmount(getAmount()+q);
+		System.out.printf("Returned cd %s", getName());
 	}
 
 	@Override
-	public void sellItem() {
-		// TODO Auto-generated method stub
-
+	public void sellItem(int q) {
+		if (getAmount() >= q) {
+			Cd.this.setAmount(getAmount()-q);
+            if (getAmount() == 0) {
+            	Cd.this.setAvailability(false);
+            }
+        }
+		System.out.printf("Book %s sold!", getName());
 	}
 
 	@Override

@@ -15,21 +15,29 @@ public class Magazine extends BookstoreItem implements SalesManager{
     }
     
     @Override
-    public void checkAvailability(){
-        Boolean ava = getAvailability();
-        if(ava==true){
-        }else{
-        }
-    }
+	public void checkAvailability() {
+		if (getAmount() > 0) {
+			Magazine.this.setAvailability(true);
+		} else {
+			Magazine.this.setAvailability(false);
+		}
+	}
     
     @Override
-    public void returnItem(){
-    }
+	public void returnItem(int q) {
+		Magazine.this.setAmount(getAmount()+q);
+		System.out.printf("Returned book %s", getName());
+	}
 
-	@Override
-	public void sellItem() {
-		// TODO Auto-generated method stub
-		
+    @Override
+	public void sellItem(int q) {
+		if (getAmount() >= q) {
+			Magazine.this.setAmount(getAmount()-q);
+            if (getAmount() == 0) {
+            	Magazine.this.setAvailability(false);
+            }
+        }
+		System.out.printf("Book %s sold!", getName());
 	}
 	
 	@Override

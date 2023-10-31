@@ -28,20 +28,28 @@ public class Book extends BookstoreItem implements SalesManager {
 
 	@Override
 	public void checkAvailability() {
-		Boolean ava = getAvailability();
-		if (ava == true) {
+		if (getAmount() > 0) {
+			Book.this.setAvailability(true);
 		} else {
+			Book.this.setAvailability(false);
 		}
 	}
 
 	@Override
-	public void returnItem() {
+	public void returnItem(int q) {
+		Book.this.setAmount(getAmount()+q);
+		System.out.printf("Returned book %s", getName());
 	}
 
 	@Override
-	public void sellItem() {
-		// TODO Auto-generated method stub
-
+	public void sellItem(int q) {
+		if (getAmount() >= q) {
+			Book.this.setAmount(getAmount()-q);
+            if (getAmount() == 0) {
+            	Book.this.setAvailability(false);
+            }
+        }
+		System.out.printf("Book %s sold!", getName());
 	}
 
 	@Override

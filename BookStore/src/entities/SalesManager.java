@@ -1,6 +1,6 @@
 package entities;
 
 public interface SalesManager {
-	public void sellItem();
-    public void returnItem();
+	public void sellItem(int q);
+    public void returnItem(int q);
 }

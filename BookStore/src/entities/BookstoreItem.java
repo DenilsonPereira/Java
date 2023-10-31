@@ -28,8 +28,14 @@ public abstract class BookstoreItem {
     public Boolean getAvailability(){
         return availability;
     }
+    public void setAvailability(Boolean availability) {
+    	this.availability = availability;
+    }
     public int getAmount() {
     	return amount;
+    }
+    public void setAmount(int amount) {
+    	this.amount = amount;
     }
     public double getPrice() {
     	return price;
