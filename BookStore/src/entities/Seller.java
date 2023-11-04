@@ -1,13 +1,26 @@
 package entities;
 
-public class Seller extends User{
-	public double discount;
-	public Seller(String name, String cpf, String typeUser, double discount) {
-		super(name, cpf, typeUser);
-		this.discount = discount;
+public class Seller {
+	private String name, cpf;
+
+	public Seller(String name, String cpf) {
+		this.name = name;
+		this.cpf = cpf;
 	}
-	
-	public double getDiscount() {
-		return discount;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 }

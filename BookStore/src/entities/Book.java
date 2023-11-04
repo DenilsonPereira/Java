@@ -37,18 +37,18 @@ public class Book extends BookstoreItem implements SalesManager {
 
 	@Override
 	public void returnItem(int q) {
-		Book.this.setAmount(getAmount()+q);
+		Book.this.setAmount(getAmount() + q);
 		System.out.printf("Returned book %s", getName());
 	}
 
 	@Override
 	public void sellItem(int q) {
 		if (getAmount() >= q) {
-			Book.this.setAmount(getAmount()-q);
-            if (getAmount() == 0) {
-            	Book.this.setAvailability(false);
-            }
-        }
+			Book.this.setAmount(getAmount() - q);
+			if (getAmount() == 0) {
+				Book.this.setAvailability(false);
+			}
+		}
 		System.out.printf("Book %s sold!", getName());
 	}
 
@@ -56,6 +56,7 @@ public class Book extends BookstoreItem implements SalesManager {
 	public String toString() {
 		return "Name: " + this.getName() + "\nAuthor: " + this.getAuthor() + "\nYear publication: "
 				+ this.getYearPublication() + "\nAvailability: " + this.getAvailability() + "\nAmount: "
-				+ this.getAmount() + "\nPrice: " + this.getPrice() + "\nISBN: " + this.getIsbn() + "\nGender: " + this.getGender();
+				+ this.getAmount() + "\nPrice: " + this.getPrice() + "\nISBN: " + this.getIsbn() + "\nGender: "
+				+ this.getGender();
 	}
 }

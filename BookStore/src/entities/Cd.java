@@ -28,18 +28,18 @@ public class Cd extends BookstoreItem implements SalesManager {
 
 	@Override
 	public void returnItem(int q) {
-		Cd.this.setAmount(getAmount()+q);
+		Cd.this.setAmount(getAmount() + q);
 		System.out.printf("Returned cd %s", getName());
 	}
 
 	@Override
 	public void sellItem(int q) {
 		if (getAmount() >= q) {
-			Cd.this.setAmount(getAmount()-q);
-            if (getAmount() == 0) {
-            	Cd.this.setAvailability(false);
-            }
-        }
+			Cd.this.setAmount(getAmount() - q);
+			if (getAmount() == 0) {
+				Cd.this.setAvailability(false);
+			}
+		}
 		System.out.printf("Book %s sold!", getName());
 	}
 
