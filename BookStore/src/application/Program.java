@@ -14,12 +14,15 @@ public class Program {
 		ArrayList<Sale> sales = new ArrayList<Sale>();
 		int option;
 
+		System.out.println("----------- Bookstore System -----------");
+		registerSeller(sc, sellers);
+
 		while (true) {
 			try {
 				System.out.println("\n----------- Bookstore System -----------" + "\n1 - Register Seller"
 						+ "\n2 - Register bookstore item" + "\n3 - Sell" + "\n4 - Give back"
-						+ "\n5 - Seller's sales history" + "\n6 - List bookstore items" + "\n0 - Exit"
-						+ "\n--------------------------------------" + "\nEnter the desired option:");
+						+ "\n5 - Seller's sales history" + "\n6 - List bookstore items" + "\n7 - List sellers"
+						+ "\n0 - Exit" + "\n--------------------------------------" + "\nEnter the desired option:");
 
 				option = sc.nextInt();
 				sc.nextLine();
@@ -39,7 +42,7 @@ public class Program {
 					break;
 				case 3:
 
-					sellItem(sc, item, sales);
+					sellItem(sc, item, sales, sellers);
 					break;
 
 				case 4:
@@ -55,6 +58,10 @@ public class Program {
 				case 6:
 
 					listBookstoreItems(item);
+					break;
+
+				case 7:
+					listSellers(sellers);
 					break;
 
 				default:
@@ -206,7 +213,7 @@ public class Program {
 	private static void registerCd(Scanner sc, ArrayList<BookstoreItem> items) {
 		System.out.println("----------- Register Cd -----------");
 
-		String name = null, author = null, yearPublication = null, isbn = null, gender = null;
+		String name = null, author = null, yearPublication = null;
 		Integer amount = 0, volume = 0;
 		Double price = 0.0;
 		boolean enter = false;
@@ -250,7 +257,8 @@ public class Program {
 		System.out.println("\nCd registered successfully!" + "\n-----------------------------------------");
 	}
 
-	private static void sellItem(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Sale> sales) {
+	private static void sellItem(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Sale> sales,
+			ArrayList<Seller> sellers) {
 
 		System.out.println("----------- Sell -----------" + "\n1 - Book" + "\n2 - Magazine" + "\n3 - Cd"
 				+ "\n-----------------------------------------------" + "\nEnter the desired option:");
@@ -262,22 +270,23 @@ public class Program {
 			break;
 		case 1:
 
-			sellBook(sc, items, sales);
+			sellBook(sc, items, sales, sellers);
 			break;
 
 		case 2:
 
-			sellMagazine(sc, items, sales);
+			sellMagazine(sc, items, sales, sellers);
 			break;
 
 		case 3:
-			sellCd(sc, items, sales);
+			sellCd(sc, items, sales, sellers);
 			break;
 		}
 
 	}
 
-	private static void sellBook(Scanner sc, ArrayList<BookstoreItem> item, ArrayList<Sale> sales) {
+	private static void sellBook(Scanner sc, ArrayList<BookstoreItem> item, ArrayList<Sale> sales,
+			ArrayList<Seller> sellers) {
 		System.out.println("Enter the isbn of the book: ");
 		String isbn = sc.nextLine();
 
@@ -290,19 +299,35 @@ public class Program {
 						int sellB = sc.nextInt();
 						sc.nextLine();
 						b.sellItem(sellB);
-						System.out.println("Inform the seller: ");
-						String name = sc.nextLine();
-						Sale sale = new Sale(b.getName(), name);
-						sales.add(sale);
+						Boolean input = false;
+						while (!input) {
+							System.out.println("Inform the seller CPF: ");
+							String cpf = sc.nextLine();
+							for (Seller s : sellers) {
+								if (cpf.equalsIgnoreCase(s.getCpf())) {
+									Sale sale = new Sale(b.getName(), s.getName());
+									sales.add(sale);
+									input = true;
+									System.out.println("Sale Successfully Completed!");
+									break;
+								}
+							}
+							if (!input) {
+								System.out.println("Invalid seller, please re-enter!");
+							}
+						}
 					} else {
 						System.out.println("The book is not availability! ");
 					}
+				} else {
+					System.out.println("The book is not registered! ");
 				}
 			}
 		}
 	}
 
-	private static void sellMagazine(Scanner sc, ArrayList<BookstoreItem> item, ArrayList<Sale> sales) {
+	private static void sellMagazine(Scanner sc, ArrayList<BookstoreItem> item, ArrayList<Sale> sales,
+			ArrayList<Seller> sellers) {
 		System.out.println("Enter the name of the magazine: ");
 		String name = sc.nextLine();
 
@@ -315,19 +340,35 @@ public class Program {
 						int sellM = sc.nextInt();
 						sc.nextLine();
 						m.sellItem(sellM);
-						System.out.println("Inform the seller:");
-						String nameSeller = sc.nextLine();
-						Sale sale = new Sale(m.getName(), nameSeller);
-						sales.add(sale);
+						Boolean input = false;
+						while (!input) {
+							System.out.println("Inform the seller CPF: ");
+							String cpf = sc.nextLine();
+							for (Seller s : sellers) {
+								if (cpf.equalsIgnoreCase(s.getCpf())) {
+									Sale sale = new Sale(m.getName(), s.getName());
+									sales.add(sale);
+									input = true;
+									System.out.println("Sale Successfully Completed!");
+									break;
+								}
+							}
+							if (!input) {
+								System.out.println("Invalid seller, please re-enter!");
+							}
+						}
 					} else {
 						System.out.println("The magazine is not availability! ");
 					}
+				} else {
+					System.out.println("The magazine is not registered! ");
 				}
 			}
 		}
 	}
 
-	private static void sellCd(Scanner sc, ArrayList<BookstoreItem> item, ArrayList<Sale> sales) {
+	private static void sellCd(Scanner sc, ArrayList<BookstoreItem> item, ArrayList<Sale> sales,
+			ArrayList<Seller> sellers) {
 		System.out.println("Enter the name of the CD: ");
 		String name = sc.nextLine();
 
@@ -340,13 +381,28 @@ public class Program {
 						int sellC = sc.nextInt();
 						sc.nextLine();
 						c.sellItem(sellC);
-						System.out.println("Informe o vendedor: ");
-						String nameSeller = sc.nextLine();
-						Sale sale = new Sale(c.getName(), nameSeller);
-						sales.add(sale);
+						Boolean input = false;
+						while (!input) {
+							System.out.println("Inform the seller CPF: ");
+							String cpf = sc.nextLine();
+							for (Seller s : sellers) {
+								if (cpf.equalsIgnoreCase(s.getCpf())) {
+									Sale sale = new Sale(c.getName(), s.getName());
+									sales.add(sale);
+									input = true;
+									System.out.println("Sale Successfully Completed!");
+									break;
+								}
+							}
+							if (!input) {
+								System.out.println("Invalid seller, please re-enter!");
+							}
+						}
 					} else {
 						System.out.println("The cd is not availability! ");
 					}
+				} else {
+					System.out.println("The book is not registered! ");
 				}
 			}
 		}
@@ -453,6 +509,15 @@ public class Program {
 				Cd c = (Cd) l;
 				System.out.println("---------------------\n" + c.toString() + "\n---------------------");
 			}
+		}
+	}
+
+	private static void listSellers(ArrayList<Seller> sellers) {
+		System.out.println("----------- List sellers -----------");
+		for (Seller s : sellers) {
+			System.out.printf(
+					"-------------------------------------\n Name: %s | CPF: %s \n-------------------------------------",
+					s.getName(), s.getCpf());
 		}
 	}
 }
