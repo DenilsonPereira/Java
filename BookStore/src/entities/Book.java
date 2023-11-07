@@ -56,7 +56,7 @@ public class Book extends BookstoreItem implements SalesManager {
 	public String toString() {
 		return "Name: " + this.getName() + "\nAuthor: " + this.getAuthor() + "\nYear publication: "
 				+ this.getYearPublication() + "\nAvailability: " + this.getAvailability() + "\nAmount: "
-				+ this.getAmount() + "\nPrice: " + this.getPrice() + "\nISBN: " + this.getIsbn() + "\nGender: "
+				+ this.getAmount() + "\nPrice: $" + this.getPrice() + "\nISBN: " + this.getIsbn() + "\nGender: "
 				+ this.getGender();
 	}
 }

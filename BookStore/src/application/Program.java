@@ -80,10 +80,17 @@ public class Program {
 		System.out.println("----------- Register Seller -----------");
 		System.out.print("Name: ");
 		String name = sc.nextLine();
-
-		System.out.print("Cpf: ");
-		String cpf = sc.nextLine();
-
+		String cpf;
+		while (true) {
+			System.out.print("Cpf: ");
+			cpf = sc.nextLine();
+			try {
+				cpf = verifyCpf(cpf);
+				break;
+			} catch (IllegalArgumentException e) {
+				System.out.println("Erro: " + e.getMessage());
+			}
+		}
 		Seller seller = new Seller(name, cpf);
 
 		sellers.add(seller);
@@ -92,11 +99,8 @@ public class Program {
 	}
 
 	private static void registerItem(Scanner sc, ArrayList<BookstoreItem> items) {
-		System.out.println("------------ Register Bookstore Item ------------");
-		System.out.println("1 - Register Book");
-		System.out.println("2 - Register Magazine");
-		System.out.println("3 - Register Cd");
-		System.out.print("Enter the desired option: ");
+		System.out.println("------------ Register Bookstore Item ------------" + "\n1 - Register Book"
+				+ "\n2 - Register Magazine" + "\n3 - Register Cd" + "\n0 - Return" + "\nEnter the desired option: ");
 
 		int option = sc.nextInt();
 		sc.nextLine();
@@ -122,8 +126,7 @@ public class Program {
 		String name = null, author = null, yearPublication = null, isbn = null, gender = null;
 		Integer amount = 0;
 		Double price = 0.0;
-		boolean enter = false;
-		while (!enter) {
+		while (true) {
 			try {
 				System.out.println("Name: ");
 				name = sc.nextLine();
@@ -134,22 +137,44 @@ public class Program {
 				System.out.println("Year publication: ");
 				yearPublication = sc.nextLine();
 
-				System.out.println("ISBN: ");
-				isbn = sc.nextLine();
+				while (true) {
+					System.out.println("ISBN: ");
+					isbn = sc.nextLine();
+					try {
+						isbn = verifyIsbn(isbn);
+						break;
+					} catch (IllegalArgumentException e) {
+						System.out.println("Erro: " + e.getMessage());
+					}
+				}
 
-				System.out.println("Price: ");
-				price = Double.parseDouble(sc.nextLine());
+				while (true) {
+					System.out.println("Price: ");
+					price = Double.parseDouble(sc.nextLine());
+					if (price >= 0.0) {
+						break;
+					} else {
+						System.out.println("Price must be greater than zero!");
+					}
+				}
 
-				System.out.println("Amount: ");
-				amount = Integer.parseInt(sc.nextLine());
+				while (true) {
+					System.out.println("Amount: ");
+					amount = Integer.parseInt(sc.nextLine());
+					if (amount > 0) {
+						break;
+					} else {
+						System.out.println("Quantity must be greater than zero!");
+					}
+				}
 
 				System.out.println("Gender: ");
 				gender = sc.nextLine();
 				if (name.isEmpty() || price <= 0 || amount <= 0) {
-					throw new BusinessException("Invalid Input");
+					throw new BusinessException("Invalid Input!");
 				}
 
-				enter = true;
+				break;
 			} catch (NumberFormatException e) {
 				System.out.println("Invalid value. Enter a valid number.");
 			} catch (BusinessException e) {
@@ -184,11 +209,25 @@ public class Program {
 				System.out.println("Edition: ");
 				edition = sc.nextLine();
 
-				System.out.println("Price: ");
-				price = Double.parseDouble(sc.nextLine());
+				while (true) {
+					System.out.println("Price: ");
+					price = Double.parseDouble(sc.nextLine());
+					if (price >= 0.0) {
+						break;
+					} else {
+						System.out.println("Price must be greater than zero!");
+					}
+				}
 
-				System.out.println("Amount: ");
-				amount = Integer.parseInt(sc.nextLine());
+				while (true) {
+					System.out.println("Amount: ");
+					amount = Integer.parseInt(sc.nextLine());
+					if (amount > 0) {
+						break;
+					} else {
+						System.out.println("Quantity must be greater than zero!");
+					}
+				}
 
 				if (name.isEmpty() || price <= 0 || amount <= 0) {
 					throw new BusinessException("Invalid Input");
@@ -216,8 +255,7 @@ public class Program {
 		String name = null, author = null, yearPublication = null;
 		Integer amount = 0, volume = 0;
 		Double price = 0.0;
-		boolean enter = false;
-		while (!enter) {
+		while (true) {
 			try {
 				System.out.println("Name: ");
 				name = sc.nextLine();
@@ -231,17 +269,31 @@ public class Program {
 				System.out.println("Volume: ");
 				volume = Integer.parseInt(sc.nextLine());
 
-				System.out.println("Price: ");
-				price = Double.parseDouble(sc.nextLine());
+				while (true) {
+					System.out.println("Price: ");
+					price = Double.parseDouble(sc.nextLine());
+					if (price >= 0.0) {
+						break;
+					} else {
+						System.out.println("Price must be greater than zero!");
+					}
+				}
 
-				System.out.println("Amount: ");
-				amount = Integer.parseInt(sc.nextLine());
+				while (true) {
+					System.out.println("Amount: ");
+					amount = Integer.parseInt(sc.nextLine());
+					if (amount > 0) {
+						break;
+					} else {
+						System.out.println("Quantity must be greater than zero!");
+					}
+				}
 
 				if (name.isEmpty() || price <= 0 || amount <= 0) {
 					throw new BusinessException("Invalid Input");
 				}
 
-				enter = true;
+				break;
 			} catch (NumberFormatException e) {
 				System.out.println("Invalid value. Enter a valid number.");
 			} catch (BusinessException e) {
@@ -259,28 +311,32 @@ public class Program {
 
 	private static void sellItem(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Sale> sales,
 			ArrayList<Seller> sellers) {
+		if (items.size() == 0) {
+			System.out.println("No items registered or available!");
+		} else {
+			System.out.println(
+					"----------- Sell -----------" + "\n1 - Book" + "\n2 - Magazine" + "\n3 - Cd" + "\n0 - Return"
+							+ "\n-----------------------------------------------" + "\nEnter the desired option:");
 
-		System.out.println("----------- Sell -----------" + "\n1 - Book" + "\n2 - Magazine" + "\n3 - Cd"
-				+ "\n-----------------------------------------------" + "\nEnter the desired option:");
+			int option = sc.nextInt();
+			sc.nextLine();
+			switch (option) {
+			default:
+				break;
+			case 1:
 
-		int option = sc.nextInt();
-		sc.nextLine();
-		switch (option) {
-		default:
-			break;
-		case 1:
+				sellBook(sc, items, sales, sellers);
+				break;
 
-			sellBook(sc, items, sales, sellers);
-			break;
+			case 2:
 
-		case 2:
+				sellMagazine(sc, items, sales, sellers);
+				break;
 
-			sellMagazine(sc, items, sales, sellers);
-			break;
-
-		case 3:
-			sellCd(sc, items, sales, sellers);
-			break;
+			case 3:
+				sellCd(sc, items, sales, sellers);
+				break;
+			}
 		}
 
 	}
@@ -409,24 +465,28 @@ public class Program {
 	}
 
 	private static void giveBackItem(Scanner sc, ArrayList<BookstoreItem> items) {
+		if (items.size() == 0) {
+			System.out.println("No items registered!");
+		} else {
+			System.out.println(
+					"----------- Give back -----------" + "\n1 - Book" + "\n2 - Magazine" + "\n3 - Cd" + "\n0 - Return"
+							+ "\n-----------------------------------------------" + "\nEnter the desired option:");
 
-		System.out.println("----------- Give back -----------" + "\n1 - Book" + "\n2 - Magazine" + "\n3 - Cd"
-				+ "\n-----------------------------------------------" + "\nEnter the desired option:");
-
-		int option = sc.nextInt();
-		sc.nextLine();
-		switch (option) {
-		default:
-			break;
-		case 1:
-			giveBackBook(sc, items);
-			break;
-		case 2:
-			giveBackMagazine(sc, items);
-			break;
-		case 3:
-			giveBackCd(sc, items);
-			break;
+			int option = sc.nextInt();
+			sc.nextLine();
+			switch (option) {
+			default:
+				break;
+			case 1:
+				giveBackBook(sc, items);
+				break;
+			case 2:
+				giveBackMagazine(sc, items);
+				break;
+			case 3:
+				giveBackCd(sc, items);
+				break;
+			}
 		}
 
 	}
@@ -494,20 +554,23 @@ public class Program {
 	}
 
 	private static void listBookstoreItems(ArrayList<BookstoreItem> items) {
-
 		System.out.println("----------- List bookstore items -----------");
-		for (BookstoreItem l : items) {
-			if (l instanceof Book) {
-				Book b = (Book) l;
-				System.out.println("---------------------\n" + b.toString() + "\n---------------------");
+		if (items.size() == 0) {
+			System.out.println("No items registered!");
+		} else {
+			for (BookstoreItem l : items) {
+				if (l instanceof Book) {
+					Book b = (Book) l;
+					System.out.println("---------------------\n" + b.toString() + "\n---------------------");
 
-			} else if (l instanceof Magazine) {
-				Magazine m = (Magazine) l;
-				System.out.println("---------------------\n" + m.toString() + "\n---------------------");
+				} else if (l instanceof Magazine) {
+					Magazine m = (Magazine) l;
+					System.out.println("---------------------\n" + m.toString() + "\n---------------------");
 
-			} else if (l instanceof Cd) {
-				Cd c = (Cd) l;
-				System.out.println("---------------------\n" + c.toString() + "\n---------------------");
+				} else if (l instanceof Cd) {
+					Cd c = (Cd) l;
+					System.out.println("---------------------\n" + c.toString() + "\n---------------------");
+				}
 			}
 		}
 	}
@@ -519,5 +582,27 @@ public class Program {
 					"-------------------------------------\n Name: %s | CPF: %s \n-------------------------------------",
 					s.getName(), s.getCpf());
 		}
+	}
+
+	private static String verifyCpf(String cpf) {
+		cpf = cpf.replaceAll("[^0-9]", "");
+
+		if (cpf.length() != 11) {
+
+			throw new IllegalArgumentException("CPF must contain 11 digits.");
+		}
+
+		return cpf;
+	}
+
+	private static String verifyIsbn(String isbn) {
+		isbn = isbn.replaceAll("[^0-9]", "");
+
+		if (isbn.length() != 10) {
+
+			throw new IllegalArgumentException("ISBN must contain 10 digits.");
+		}
+
+		return isbn;
 	}
 }
