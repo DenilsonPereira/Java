@@ -1,10 +1,13 @@
 package entities;
 
 public class SalesReport {
+	private String nameProd, nameSeller;
 	private double totalSales;
 	private int totalItem;
 
-	public SalesReport(double totalSales, int totalItem) {
+	public SalesReport( String nameProd,String nameSeller, double totalSales, int totalItem) {
+		this.nameProd = nameProd;
+		this.nameSeller = nameSeller;
 		this.totalSales = totalSales;
 		this.totalItem = totalItem;
 	}
@@ -28,5 +31,21 @@ public class SalesReport {
 	public void updateSales(double salesAmount, int soldItems) {
 		this.totalSales += salesAmount;
 		this.totalItem += soldItems;
+	}
+
+	public String getNameProd() {
+		return nameProd;
+	}
+
+	public void setNameProd(String nameProd) {
+		this.nameProd = nameProd;
+	}
+
+	public String getNameSeller() {
+		return nameSeller;
+	}
+
+	public void setNameSeller(String nameSeller) {
+		this.nameSeller = nameSeller;
 	}
 }

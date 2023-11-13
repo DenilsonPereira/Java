@@ -22,8 +22,8 @@ public class Program {
 			try {
 				System.out.println("\n----------- Bookstore System -----------" + "\n1 - Register Seller"
 						+ "\n2 - Register bookstore item" + "\n3 - Sell" + "\n4 - Generate Report"
-						+ "\n5 - Seller's sales history" + "\n6 - List bookstore items" + "\n7 - List sellers"
-						+ "\n0 - Exit" + "\n--------------------------------------" + "\nEnter the desired option:");
+						+ "\n5 - Sales history" + "\n6 - List bookstore items" + "\n7 - List sellers" + "\n0 - Exit"
+						+ "\n--------------------------------------" + "\nEnter the desired option:");
 
 				option = sc.nextInt();
 				sc.nextLine();
@@ -48,12 +48,12 @@ public class Program {
 
 				case 4:
 
-					generateReport(reports);
+					generateReport(sales);
 					break;
 
 				case 5:
 
-					salesHistory(sc, sales);
+					salesHistory(reports);
 					break;
 
 				case 6:
@@ -316,31 +316,36 @@ public class Program {
 
 	private static void sellItem(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers,
 			ArrayList<SalesReport> report) {
-		if (items.size() == 0) {
-			System.out.println("No items registered or available!");
-		} else {
-			System.out.println(
-					"----------- Sell -----------" + "\n1 - Book" + "\n2 - Magazine" + "\n3 - Cd" + "\n0 - Return"
-							+ "\n-----------------------------------------------" + "\nEnter the desired option:");
+		while (true) {
+			if (items.size() == 0) {
+				System.out.println("No items registered or available!");
+			} else {
+				System.out.println(
+						"----------- Sell -----------" + "\n1 - Book" + "\n2 - Magazine" + "\n3 - Cd" + "\n0 - Return"
+								+ "\n-----------------------------------------------" + "\nEnter the desired option:");
 
-			int option = sc.nextInt();
-			sc.nextLine();
-			switch (option) {
-			default:
-				break;
-			case 1:
+				int option = sc.nextInt();
+				sc.nextLine();
+				switch (option) {
+				case 0:
+					return;
+				case 1:
 
-				sellBook(sc, items, sellers, report);
-				break;
+					sellBook(sc, items, sellers, report);
+					break;
 
-			case 2:
+				case 2:
 
-				sellMagazine(sc, items, sellers, report);
-				break;
+					sellMagazine(sc, items, sellers, report);
+					break;
 
-			case 3:
-				sellCd(sc, items, sellers, report);
-				break;
+				case 3:
+					sellCd(sc, items, sellers, report);
+					break;
+				default:
+					System.out.println("Invalid option!");
+					break;
+				}
 			}
 		}
 
@@ -348,6 +353,18 @@ public class Program {
 
 	private static void sellBook(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers,
 			ArrayList<SalesReport> reports) {
+		boolean hasBooks = false;
+		for (BookstoreItem item : items) {
+			if (item instanceof Book) {
+				hasBooks = true;
+				break;
+			}
+		}
+
+		if (!hasBooks) {
+			System.out.println("There are no books registered at the moment.");
+			return;
+		}
 		System.out.println("Enter the isbn of the book: ");
 		String isbn = sc.nextLine();
 
@@ -369,7 +386,8 @@ public class Program {
 
 					if (seller != null) {
 
-						SalesReport salesReport = new SalesReport(bookToSell.getPrice(), sellQuantity);
+						SalesReport salesReport = new SalesReport(bookToSell.getName(), seller.getName(),
+								(bookToSell.getPrice() * sellQuantity), sellQuantity);
 						reports.add(salesReport);
 
 						validSeller = true;
@@ -388,6 +406,18 @@ public class Program {
 
 	private static void sellMagazine(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers,
 			ArrayList<SalesReport> reports) {
+		boolean hasMagazine = false;
+		for (BookstoreItem item : items) {
+			if (item instanceof Magazine) {
+				hasMagazine = true;
+				break;
+			}
+		}
+
+		if (!hasMagazine) {
+			System.out.println("There are no magazines registered at the moment.");
+			return;
+		}
 		System.out.println("Enter the name of the magazine: ");
 		String name = sc.nextLine();
 
@@ -409,8 +439,8 @@ public class Program {
 
 					if (seller != null) {
 
-						SalesReport salesReport = new SalesReport((magazineToSell.getPrice() * sellQuantity),
-								sellQuantity);
+						SalesReport salesReport = new SalesReport(name, seller.getName(),
+								(magazineToSell.getPrice() * sellQuantity), sellQuantity);
 						reports.add(salesReport);
 
 						validSeller = true;
@@ -429,6 +459,18 @@ public class Program {
 
 	private static void sellCd(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers,
 			ArrayList<SalesReport> reports) {
+		boolean hasCd = false;
+		for (BookstoreItem item : items) {
+			if (item instanceof Cd) {
+				hasCd = true;
+				break;
+			}
+		}
+
+		if (!hasCd) {
+			System.out.println("There are no cd's registered at the moment.");
+			return;
+		}
 		System.out.println("Enter the name of the magazine: ");
 		String name = sc.nextLine();
 
@@ -450,7 +492,8 @@ public class Program {
 
 					if (seller != null) {
 
-						SalesReport salesReport = new SalesReport((cdToSell.getPrice() * sellQuantity), sellQuantity);
+						SalesReport salesReport = new SalesReport(name, seller.getName(),
+								(cdToSell.getPrice() * sellQuantity), sellQuantity);
 						reports.add(salesReport);
 
 						validSeller = true;
@@ -467,20 +510,25 @@ public class Program {
 		}
 	}
 
-	private static void salesHistory(Scanner sc, ArrayList<Sale> sales) {
+	private static void salesHistory(ArrayList<SalesReport> sales) {
+		if (sales.isEmpty()) {
+			System.out.println("No sales made");
+		} else {
+			System.out.println("----------- Sales Report -----------");
+			for (SalesReport s : sales) {
+				System.out.printf(
+						"\n----------------------\nName's products: %s | Sales amount: $%s | Total Items Sold: ",
+						s.getNameProd(), s.getTotalSales(), s.getTotalItem());
+			}
+			System.out.println("\n----------------------");
+		}
+	}
+
+	private static void generateReport(ArrayList<Sale> sales) {
 
 		System.out.println("----------- Sales history -----------");
 		for (Sale s : sales) {
 			System.out.printf("Item: %s, Vendedor: %s", s.getNameProduct(), s.getNameSeller());
-		}
-
-	}
-
-	private static void generateReport(ArrayList<SalesReport> sales) {
-		System.out.println("----------- Sales Report -----------");
-		for (SalesReport s : sales) {
-			System.out.println("Sales amount: " + s.getTotalSales());
-			System.out.println("Total Items Sold: " + s.getTotalItem());
 		}
 	}
 
@@ -509,10 +557,9 @@ public class Program {
 	private static void listSellers(ArrayList<Seller> sellers) {
 		System.out.println("----------- List sellers -----------");
 		for (Seller s : sellers) {
-			System.out.printf(
-					"-------------------------------------\n Name: %s | CPF: %s \n-------------------------------------",
-					s.getName(), s.getCpf());
+			System.out.printf("\n-------------------------------------\n Name: %s | CPF: %s ", s.getName(), s.getCpf());
 		}
+		System.out.println("\n-------------------------------------");
 	}
 
 	private static String verifyCpf(String cpf) {
