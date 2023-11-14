@@ -428,8 +428,18 @@ public class Program {
 
 		if (magazineToSell != null) {
 			if (magazineToSell.getAvailability()) {
-				System.out.printf("Tell us how many magazines %s wants to buy?", magazineToSell.getName());
-				int sellQuantity = sc.nextInt();
+				int sellQuantity = 0;
+				do {
+					System.out.printf("Tell us how many magazines %s wants to buy?\n", magazineToSell.getName());
+				    try {
+				        sellQuantity = sc.nextInt();
+				        if (sellQuantity <= 0) {
+				            throw new Exception("The quantity cannot be negative or zero.");
+				        }
+				    } catch (Exception e) {
+				        System.out.println(e.getMessage());
+				    }
+				} while (sellQuantity <= 0);
 				sc.nextLine();
 				magazineToSell.sellItem(sellQuantity);
 
@@ -480,8 +490,18 @@ public class Program {
 
 		if (cdToSell != null) {
 			if (cdToSell.getAvailability()) {
-				System.out.printf("Tell us how many cd %s wants to buy?", cdToSell.getName());
-				int sellQuantity = sc.nextInt();
+				int sellQuantity = 0;
+				do {
+					System.out.printf("Tell us how many cd's %s wants to buy?\n", cdToSell.getName());
+				    try {
+				        sellQuantity = sc.nextInt();
+				        if (sellQuantity <= 0) {
+				            throw new Exception("The quantity cannot be negative or zero.");
+				        }
+				    } catch (Exception e) {
+				        System.out.println(e.getMessage());
+				    }
+				} while (sellQuantity <= 0);
 				sc.nextLine();
 				cdToSell.sellItem(sellQuantity);
 
