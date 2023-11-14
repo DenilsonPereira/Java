@@ -42,7 +42,7 @@ public class Magazine extends BookstoreItem implements SalesManager {
 				Magazine.this.setAvailability(false);
 			}
 		}
-		System.out.printf("Book %s sold!", getName());
+		System.out.printf("Magazine %s sold!", getName());
 	}
 
 	@Override

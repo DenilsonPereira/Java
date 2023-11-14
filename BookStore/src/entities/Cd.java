@@ -42,7 +42,7 @@ public class Cd extends BookstoreItem implements SalesManager {
 				Cd.this.setAvailability(false);
 			}
 		}
-		System.out.printf("Book %s sold!", getName());
+		System.out.printf("Cd %s sold!", getName());
 	}
 
 	@Override

@@ -12,7 +12,6 @@ public class Program {
 		ArrayList<BookstoreItem> item = new ArrayList<BookstoreItem>();
 		ArrayList<Seller> sellers = new ArrayList<Seller>();
 		ArrayList<Sale> sales = new ArrayList<Sale>();
-		ArrayList<SalesReport> reports = new ArrayList<SalesReport>();
 		int option;
 
 		System.out.println("----------- Bookstore System -----------");
@@ -21,8 +20,8 @@ public class Program {
 		while (true) {
 			try {
 				System.out.println("\n----------- Bookstore System -----------" + "\n1 - Register Seller"
-						+ "\n2 - Register bookstore item" + "\n3 - Sell" + "\n4 - Generate Report"
-						+ "\n5 - Sales history" + "\n6 - List bookstore items" + "\n7 - List sellers" + "\n0 - Exit"
+						+ "\n2 - Register bookstore item" + "\n3 - Sell"
+						+ "\n4 - Sales history" + "\n5 - List bookstore items" + "\n6 - List sellers" + "\n0 - Exit"
 						+ "\n--------------------------------------" + "\nEnter the desired option:");
 
 				option = sc.nextInt();
@@ -43,25 +42,20 @@ public class Program {
 					break;
 				case 3:
 
-					sellItem(sc, item, sellers, reports);
+					sellItem(sc, item, sellers, sales);
 					break;
 
 				case 4:
 
-					generateReport(sales);
+					salesHistory(sales);
 					break;
 
 				case 5:
 
-					salesHistory(reports);
-					break;
-
-				case 6:
-
 					listBookstoreItems(item);
 					break;
 
-				case 7:
+				case 6:
 					listSellers(sellers);
 					break;
 
@@ -314,11 +308,11 @@ public class Program {
 		System.out.println("\nCd registered successfully!" + "\n-----------------------------------------");
 	}
 
-	private static void sellItem(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers,
-			ArrayList<SalesReport> report) {
+	private static void sellItem(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers, ArrayList<Sale> sale) {
 		while (true) {
 			if (items.size() == 0) {
 				System.out.println("No items registered or available!");
+				break;
 			} else {
 				System.out.println(
 						"----------- Sell -----------" + "\n1 - Book" + "\n2 - Magazine" + "\n3 - Cd" + "\n0 - Return"
@@ -331,17 +325,17 @@ public class Program {
 					return;
 				case 1:
 
-					sellBook(sc, items, sellers, report);
-					break;
+					sellBook(sc, items, sellers, sale);
+					return;
 
 				case 2:
 
-					sellMagazine(sc, items, sellers, report);
-					break;
+					sellMagazine(sc, items, sellers, sale);
+					return;
 
 				case 3:
-					sellCd(sc, items, sellers, report);
-					break;
+					sellCd(sc, items, sellers, sale);
+					return;
 				default:
 					System.out.println("Invalid option!");
 					break;
@@ -351,8 +345,7 @@ public class Program {
 
 	}
 
-	private static void sellBook(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers,
-			ArrayList<SalesReport> reports) {
+	private static void sellBook(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers, ArrayList<Sale> sale) {
 		boolean hasBooks = false;
 		for (BookstoreItem item : items) {
 			if (item instanceof Book) {
@@ -372,8 +365,18 @@ public class Program {
 
 		if (bookToSell != null) {
 			if (bookToSell.getAvailability()) {
-				System.out.printf("Tell us how many books %s wants to buy?\n", bookToSell.getName());
-				int sellQuantity = sc.nextInt();
+				int sellQuantity = 0;
+				do {
+					System.out.printf("Tell us how many books %s wants to buy?\n", bookToSell.getName());
+				    try {
+				        sellQuantity = sc.nextInt();
+				        if (sellQuantity <= 0) {
+				            throw new Exception("The quantity cannot be negative or zero.");
+				        }
+				    } catch (Exception e) {
+				        System.out.println(e.getMessage());
+				    }
+				} while (sellQuantity <= 0);
 				sc.nextLine();
 				bookToSell.sellItem(sellQuantity);
 
@@ -385,10 +388,10 @@ public class Program {
 					Seller seller = findSellerByCPF(sellers, cpf);
 
 					if (seller != null) {
-
-						SalesReport salesReport = new SalesReport(bookToSell.getName(), seller.getName(),
+						
+						Sale saleH = new Sale(bookToSell.getName(), seller.getName(),
 								(bookToSell.getPrice() * sellQuantity), sellQuantity);
-						reports.add(salesReport);
+						sale.add(saleH);
 
 						validSeller = true;
 						System.out.println("Sale Successfully Completed!");
@@ -405,7 +408,7 @@ public class Program {
 	}
 
 	private static void sellMagazine(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers,
-			ArrayList<SalesReport> reports) {
+			ArrayList<Sale> sale) {
 		boolean hasMagazine = false;
 		for (BookstoreItem item : items) {
 			if (item instanceof Magazine) {
@@ -439,9 +442,9 @@ public class Program {
 
 					if (seller != null) {
 
-						SalesReport salesReport = new SalesReport(name, seller.getName(),
+						Sale saleH = new Sale(magazineToSell.getName(), seller.getName(),
 								(magazineToSell.getPrice() * sellQuantity), sellQuantity);
-						reports.add(salesReport);
+						sale.add(saleH);
 
 						validSeller = true;
 						System.out.println("Sale Successfully Completed!");
@@ -457,8 +460,7 @@ public class Program {
 		}
 	}
 
-	private static void sellCd(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers,
-			ArrayList<SalesReport> reports) {
+	private static void sellCd(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers, ArrayList<Sale> sale) {
 		boolean hasCd = false;
 		for (BookstoreItem item : items) {
 			if (item instanceof Cd) {
@@ -471,14 +473,14 @@ public class Program {
 			System.out.println("There are no cd's registered at the moment.");
 			return;
 		}
-		System.out.println("Enter the name of the magazine: ");
+		System.out.println("Enter the name of the cd: ");
 		String name = sc.nextLine();
 
 		Cd cdToSell = findCdByName(items, name);
 
 		if (cdToSell != null) {
 			if (cdToSell.getAvailability()) {
-				System.out.printf("Tell us how many magazines %s wants to buy?", cdToSell.getName());
+				System.out.printf("Tell us how many cd %s wants to buy?", cdToSell.getName());
 				int sellQuantity = sc.nextInt();
 				sc.nextLine();
 				cdToSell.sellItem(sellQuantity);
@@ -492,9 +494,9 @@ public class Program {
 
 					if (seller != null) {
 
-						SalesReport salesReport = new SalesReport(name, seller.getName(),
+						Sale saleH = new Sale(cdToSell.getName(), seller.getName(),
 								(cdToSell.getPrice() * sellQuantity), sellQuantity);
-						reports.add(salesReport);
+						sale.add(saleH);
 
 						validSeller = true;
 						System.out.println("Sale Successfully Completed!");
@@ -503,33 +505,22 @@ public class Program {
 					}
 				}
 			} else {
-				System.out.println("The magazine is not available!");
+				System.out.println("The cd is not available!");
 			}
 		} else {
-			System.out.println("The magazine is not registered!");
+			System.out.println("The cd is not registered!");
 		}
 	}
 
-	private static void salesHistory(ArrayList<SalesReport> sales) {
-		if (sales.isEmpty()) {
-			System.out.println("No sales made");
-		} else {
-			System.out.println("----------- Sales Report -----------");
-			for (SalesReport s : sales) {
-				System.out.printf(
-						"\n----------------------\nName's products: %s | Sales amount: $%s | Total Items Sold: ",
-						s.getNameProd(), s.getTotalSales(), s.getTotalItem());
-			}
-			System.out.println("\n----------------------");
-		}
-	}
-
-	private static void generateReport(ArrayList<Sale> sales) {
+	private static void salesHistory(ArrayList<Sale> sales) {
 
 		System.out.println("----------- Sales history -----------");
 		for (Sale s : sales) {
-			System.out.printf("Item: %s, Vendedor: %s", s.getNameProduct(), s.getNameSeller());
+			System.out.printf("\nSeller: %s | Item: %s | Value: $%s | Quantity: %s",  s.getNameSeller(), s.getNameProduct(), s.getPrice(), s.getAmount());
+			System.out.println("\n------------------------------------");
 		}
+		Sale s = sales.get(0);
+		System.out.printf("TOTAL ITEM: %s | TOTAL PRICE: $%s", s.totalItems(), s.totalSale());
 	}
 
 	private static void listBookstoreItems(ArrayList<BookstoreItem> items) {
