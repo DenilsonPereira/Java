@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Magazine extends BookstoreItem implements Manage {
@@ -80,30 +81,36 @@ public class Magazine extends BookstoreItem implements Manage {
 				}
 
 				while (true) {
-					System.out.println("Price: ");
-					price = sc.nextDouble();
-					sc.nextLine();
 					try {
+						System.out.println("Price: ");
+						price = sc.nextDouble();
+						sc.nextLine();
 						if (price <= 0.0) {
 							throw new IllegalArgumentException("Price cannot be zero or negative");
 						}
 						break;
 					} catch (IllegalArgumentException e) {
 						System.out.println("Erro: " + e.getMessage());
+					} catch (InputMismatchException e) {
+						System.out.println("You entered a letter, please enter a number!");
+						sc.nextLine();
 					}
 				}
 
 				while (true) {
-					System.out.println("Amount: ");
-					amount = sc.nextInt();
-					sc.nextLine();
 					try {
+						System.out.println("Amount: ");
+						amount = sc.nextInt();
+						sc.nextLine();
 						if (amount <= 0) {
 							throw new IllegalArgumentException("Quantity cannot be zero or negative");
 						}
 						break;
 					} catch (IllegalArgumentException e) {
 						System.out.println("Erro: " + e.getMessage());
+					} catch (InputMismatchException e) {
+						System.out.println("You entered a letter, please enter a number!");
+						sc.nextLine();
 					}
 				}
 				boolean availability = true;
@@ -149,8 +156,8 @@ public class Magazine extends BookstoreItem implements Manage {
 							throw new Exception("The quantity cannot be negative or zero.");
 						}
 						if (sellQuantity > magazineToSell.getAmount()) {
-				            throw new Exception("The quantity requested is not available.");
-				        }
+							throw new Exception("The quantity requested is not available.");
+						}
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 					}
