@@ -74,21 +74,23 @@ public class Cd extends BookstoreItem implements Manage {
 					System.out.println("Volume: ");
 					volume = sc.nextInt();
 					sc.nextLine();
-					if (volume > 0) {
-						break;
-					} else {
-						System.out.println("Volume must be greater than zero!");
+					if (volume <= 0) {
+						throw new IllegalArgumentException("Number cannot be negative");
 					}
+					break;
 				}
 
 				while (true) {
 					System.out.println("Price: ");
 					price = sc.nextDouble();
 					sc.nextLine();
-					if (price > 0.0) {
+					try {
+						if (price <= 0.0) {
+							throw new IllegalArgumentException("Price cannot be zero or negative");
+						}
 						break;
-					} else {
-						System.out.println("Price must be greater than zero!");
+					} catch (IllegalArgumentException e) {
+						System.out.println("Erro: " + e.getMessage());
 					}
 				}
 
@@ -96,10 +98,13 @@ public class Cd extends BookstoreItem implements Manage {
 					System.out.println("Amount: ");
 					amount = sc.nextInt();
 					sc.nextLine();
-					if (amount > 0) {
+					try {
+						if (amount <= 0) {
+							throw new IllegalArgumentException("Quantity cannot be zero or negative");
+						}
 						break;
-					} else {
-						System.out.println("Quantity must be greater than zero!");
+					} catch (IllegalArgumentException e) {
+						System.out.println("Erro: " + e.getMessage());
 					}
 				}
 				boolean availability = true;
@@ -139,16 +144,19 @@ public class Cd extends BookstoreItem implements Manage {
 			if (cdToSell.getAvailability()) {
 				int sellQuantity = 0;
 				do {
-					System.out.printf("Tell us how many cd's %s wants to buy?\n", cdToSell.getName());
+					System.out.printf("Tell us how many books %s wants to buy?\n", cdToSell.getName());
 					try {
 						sellQuantity = sc.nextInt();
 						if (sellQuantity <= 0) {
 							throw new Exception("The quantity cannot be negative or zero.");
 						}
+						if (sellQuantity > cdToSell.getAmount()) {
+				            throw new Exception("The quantity requested is not available.");
+				        }
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 					}
-				} while (sellQuantity <= 0);
+				} while (sellQuantity <= 0 || sellQuantity > cdToSell.getAmount());
 				sc.nextLine();
 
 				boolean validSeller = false;

@@ -93,10 +93,13 @@ public class Book extends BookstoreItem implements Manage {
 					System.out.println("Price: ");
 					price = sc.nextDouble();
 					sc.nextLine();
-					if (price > 0.0) {
+					try {
+						if (price <= 0.0) {
+							throw new IllegalArgumentException("Price cannot be zero or negative");
+						}
 						break;
-					} else {
-						System.out.println("Price must be greater than zero!");
+					} catch (IllegalArgumentException e) {
+						System.out.println("Erro: " + e.getMessage());
 					}
 				}
 
@@ -104,10 +107,13 @@ public class Book extends BookstoreItem implements Manage {
 					System.out.println("Amount: ");
 					amount = sc.nextInt();
 					sc.nextLine();
-					if (amount > 0) {
+					try {
+						if (amount <= 0) {
+							throw new IllegalArgumentException("Quantity cannot be zero or negative");
+						}
 						break;
-					} else {
-						System.out.println("Quantity must be greater than zero!");
+					} catch (IllegalArgumentException e) {
+						System.out.println("Erro: " + e.getMessage());
 					}
 				}
 
@@ -131,7 +137,6 @@ public class Book extends BookstoreItem implements Manage {
 			} catch (NumberFormatException e) {
 				System.out.println("Invalid value. Enter a valid number.");
 			}
-
 		}
 	}
 
@@ -174,10 +179,13 @@ public class Book extends BookstoreItem implements Manage {
 						if (sellQuantity <= 0) {
 							throw new Exception("The quantity cannot be negative or zero.");
 						}
+						if (sellQuantity > bookToSell.getAmount()) {
+				            throw new Exception("The quantity requested is not available.");
+				        }
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 					}
-				} while (sellQuantity <= 0);
+				} while (sellQuantity <= 0 || sellQuantity > bookToSell.getAmount());
 				sc.nextLine();
 
 				boolean validSeller = false;
