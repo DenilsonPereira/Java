@@ -1,7 +1,5 @@
 package entities;
 
-import java.util.List;
-
 public class Cd extends BookstoreItem implements SalesManager {
 	public int volume;
 
@@ -50,35 +48,5 @@ public class Cd extends BookstoreItem implements SalesManager {
 		return "Name: " + this.getName() + "\nAuthor: " + this.getAuthor() + "\nYear publication: "
 				+ this.getYearPublication() + "\nAvailability: " + this.getAvailability() + "\nAmount: "
 				+ this.getAmount() + "\nPrice: $" + this.getPrice() + "\nVolume: " + this.getVolume();
-	}
-
-	@Override
-	public double calculateSalesTotal() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int calculateTotalItemsSold() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double calculateRevenueByItem(String itemName) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<Sale> getSales() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ReturnedItem> getReturnedItems() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

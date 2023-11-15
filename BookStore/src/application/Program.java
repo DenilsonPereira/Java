@@ -4,6 +4,8 @@ import entities.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Program {
 
@@ -20,8 +22,8 @@ public class Program {
 		while (true) {
 			try {
 				System.out.println("\n----------- Bookstore System -----------" + "\n1 - Register Seller"
-						+ "\n2 - Register bookstore item" + "\n3 - Sell"
-						+ "\n4 - Sales history" + "\n5 - List bookstore items" + "\n6 - List sellers" + "\n0 - Exit"
+						+ "\n2 - Register bookstore item" + "\n3 - Sell" + "\n4 - Sales history"
+						+ "\n5 - List bookstore items" + "\n6 - List sellers" + "\n0 - Exit"
 						+ "\n--------------------------------------" + "\nEnter the desired option:");
 
 				option = sc.nextInt();
@@ -73,8 +75,16 @@ public class Program {
 
 	private static void registerSeller(Scanner sc, ArrayList<Seller> sellers) {
 		System.out.println("----------- Register Seller -----------");
-		System.out.print("Name: ");
-		String name = sc.nextLine();
+		String name;
+		while (true) {
+			System.out.println("Name: ");
+			name = sc.nextLine();
+			if (name.equals("")) {
+				System.out.println("Empty name is invalid, please enter a valid name!");
+			} else {
+				break;
+			}
+		}
 		String cpf;
 		while (true) {
 			System.out.print("Cpf: ");
@@ -127,14 +137,36 @@ public class Program {
 		Double price = 0.0;
 		while (true) {
 			try {
-				System.out.println("Name: ");
-				name = sc.nextLine();
+				while (true) {
+					System.out.println("Name: ");
+					name = sc.nextLine();
+					if (name.equals("")) {
+						System.out.println("Empty name is invalid, please enter a valid name!");
+					} else {
+						break;
+					}
+				}
 
-				System.out.println("Author: ");
-				author = sc.nextLine();
+				while (true) {
+					System.out.println("Author: ");
+					author = sc.nextLine();
+					if (author.equals("")) {
+						System.out.println("Empty author name is invalid, please enter a valid name!");
+					} else {
+						break;
+					}
+				}
 
-				System.out.println("Year publication: ");
-				yearPublication = sc.nextLine();
+				while (true) {
+					System.out.println("Year publication: ");
+					yearPublication = sc.nextLine();
+					try {
+						yearPublication = verifyYear(yearPublication);
+						break;
+					} catch (IllegalArgumentException e) {
+						System.out.println("Erro: " + e.getMessage());
+					}
+				}
 
 				while (true) {
 					System.out.println("ISBN: ");
@@ -149,8 +181,9 @@ public class Program {
 
 				while (true) {
 					System.out.println("Price: ");
-					price = Double.parseDouble(sc.nextLine());
-					if (price >= 0.0) {
+					price = sc.nextDouble();
+					sc.nextLine();
+					if (price > 0.0) {
 						break;
 					} else {
 						System.out.println("Price must be greater than zero!");
@@ -159,7 +192,8 @@ public class Program {
 
 				while (true) {
 					System.out.println("Amount: ");
-					amount = Integer.parseInt(sc.nextLine());
+					amount = sc.nextInt();
+					sc.nextLine();
 					if (amount > 0) {
 						break;
 					} else {
@@ -167,17 +201,20 @@ public class Program {
 					}
 				}
 
-				System.out.println("Gender: ");
-				gender = sc.nextLine();
-				if (name.isEmpty() || price <= 0 || amount <= 0) {
-					throw new BusinessException("Invalid Input!");
+				while (true) {
+					System.out.println("Gender: ");
+					gender = sc.nextLine();
+
+					if (gender.equals("")) {
+						System.out.println("Gender needs to be informed! Enter the valid gender.");
+					} else {
+						break;
+					}
 				}
 
 				break;
 			} catch (NumberFormatException e) {
 				System.out.println("Invalid value. Enter a valid number.");
-			} catch (BusinessException e) {
-				System.out.println("Business rule error: " + e.getMessage());
 			}
 		}
 
@@ -193,25 +230,54 @@ public class Program {
 		String name = null, author = null, yearPublication = null, edition = null;
 		Integer amount = 0;
 		Double price = 0.0;
-		boolean enter = false;
-		while (!enter) {
+		while (true) {
 			try {
-				System.out.println("Name: ");
-				name = sc.nextLine();
+				while (true) {
+					System.out.println("Name: ");
+					name = sc.nextLine();
+					if (name.equals("")) {
+						System.out.println("Empty name is invalid, please enter a valid name!");
+					} else {
+						break;
+					}
+				}
 
-				System.out.println("Author: ");
-				author = sc.nextLine();
+				while (true) {
+					System.out.println("Author: ");
+					author = sc.nextLine();
+					if (author.equals("")) {
+						System.out.println("Empty author name is invalid, please enter a valid name!");
+					} else {
+						break;
+					}
+				}
 
-				System.out.println("Year publication: ");
-				yearPublication = sc.nextLine();
+				while (true) {
+					System.out.println("Year publication: ");
+					yearPublication = sc.nextLine();
+					try {
+						yearPublication = verifyYear(yearPublication);
+						break;
+					} catch (IllegalArgumentException e) {
+						System.out.println("Erro: " + e.getMessage());
+					}
+				}
 
-				System.out.println("Edition: ");
-				edition = sc.nextLine();
+				while (true) {
+					System.out.println("Edition: ");
+					edition = sc.nextLine();
+					if (edition.equals("")) {
+						System.out.println("Empty edition is invalid, please enter a valid edition!");
+					} else {
+						break;
+					}
+				}
 
 				while (true) {
 					System.out.println("Price: ");
-					price = Double.parseDouble(sc.nextLine());
-					if (price >= 0.0) {
+					price = sc.nextDouble();
+					sc.nextLine();
+					if (price > 0.0) {
 						break;
 					} else {
 						System.out.println("Price must be greater than zero!");
@@ -220,23 +286,17 @@ public class Program {
 
 				while (true) {
 					System.out.println("Amount: ");
-					amount = Integer.parseInt(sc.nextLine());
+					amount = sc.nextInt();
+					sc.nextLine();
 					if (amount > 0) {
 						break;
 					} else {
 						System.out.println("Quantity must be greater than zero!");
 					}
 				}
-
-				if (name.isEmpty() || price <= 0 || amount <= 0) {
-					throw new BusinessException("Invalid Input");
-				}
-
-				enter = true;
+				break;
 			} catch (NumberFormatException e) {
 				System.out.println("Invalid value. Enter a valid number.");
-			} catch (BusinessException e) {
-				System.out.println("Business rule error: " + e.getMessage());
 			}
 		}
 
@@ -256,22 +316,53 @@ public class Program {
 		Double price = 0.0;
 		while (true) {
 			try {
-				System.out.println("Name: ");
-				name = sc.nextLine();
+				while (true) {
+					System.out.println("Name: ");
+					name = sc.nextLine();
+					if (name.equals("")) {
+						System.out.println("Empty name is invalid, please enter a valid name!");
+					} else {
+						break;
+					}
+				}
 
-				System.out.println("Author: ");
-				author = sc.nextLine();
+				while (true) {
+					System.out.println("Author: ");
+					author = sc.nextLine();
+					if (author.equals("")) {
+						System.out.println("Empty author name is invalid, please enter a valid name!");
+					} else {
+						break;
+					}
+				}
 
-				System.out.println("Year publication: ");
-				yearPublication = sc.nextLine();
+				while (true) {
+					System.out.println("Year publication: ");
+					yearPublication = sc.nextLine();
+					try {
+						yearPublication = verifyYear(yearPublication);
+						break;
+					} catch (IllegalArgumentException e) {
+						System.out.println("Erro: " + e.getMessage());
+					}
+				}
 
-				System.out.println("Volume: ");
-				volume = Integer.parseInt(sc.nextLine());
+				while (true) {
+					System.out.println("Volume: ");
+					volume = sc.nextInt();
+					sc.nextLine();
+					if (volume > 0) {
+						break;
+					} else {
+						System.out.println("Volume must be greater than zero!");
+					}
+				}
 
 				while (true) {
 					System.out.println("Price: ");
-					price = Double.parseDouble(sc.nextLine());
-					if (price >= 0.0) {
+					price = sc.nextDouble();
+					sc.nextLine();
+					if (price > 0.0) {
 						break;
 					} else {
 						System.out.println("Price must be greater than zero!");
@@ -280,23 +371,17 @@ public class Program {
 
 				while (true) {
 					System.out.println("Amount: ");
-					amount = Integer.parseInt(sc.nextLine());
+					amount = sc.nextInt();
+					sc.nextLine();
 					if (amount > 0) {
 						break;
 					} else {
 						System.out.println("Quantity must be greater than zero!");
 					}
 				}
-
-				if (name.isEmpty() || price <= 0 || amount <= 0) {
-					throw new BusinessException("Invalid Input");
-				}
-
 				break;
 			} catch (NumberFormatException e) {
 				System.out.println("Invalid value. Enter a valid number.");
-			} catch (BusinessException e) {
-				System.out.println("Business rule error: " + e.getMessage());
 			}
 		}
 
@@ -308,7 +393,8 @@ public class Program {
 		System.out.println("\nCd registered successfully!" + "\n-----------------------------------------");
 	}
 
-	private static void sellItem(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers, ArrayList<Sale> sale) {
+	private static void sellItem(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers,
+			ArrayList<Sale> sale) {
 		while (true) {
 			if (items.size() == 0) {
 				System.out.println("No items registered or available!");
@@ -345,7 +431,8 @@ public class Program {
 
 	}
 
-	private static void sellBook(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers, ArrayList<Sale> sale) {
+	private static void sellBook(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers,
+			ArrayList<Sale> sale) {
 		boolean hasBooks = false;
 		for (BookstoreItem item : items) {
 			if (item instanceof Book) {
@@ -368,14 +455,14 @@ public class Program {
 				int sellQuantity = 0;
 				do {
 					System.out.printf("Tell us how many books %s wants to buy?\n", bookToSell.getName());
-				    try {
-				        sellQuantity = sc.nextInt();
-				        if (sellQuantity <= 0) {
-				            throw new Exception("The quantity cannot be negative or zero.");
-				        }
-				    } catch (Exception e) {
-				        System.out.println(e.getMessage());
-				    }
+					try {
+						sellQuantity = sc.nextInt();
+						if (sellQuantity <= 0) {
+							throw new Exception("The quantity cannot be negative or zero.");
+						}
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 				} while (sellQuantity <= 0);
 				sc.nextLine();
 				bookToSell.sellItem(sellQuantity);
@@ -388,7 +475,7 @@ public class Program {
 					Seller seller = findSellerByCPF(sellers, cpf);
 
 					if (seller != null) {
-						
+
 						Sale saleH = new Sale(bookToSell.getName(), seller.getName(),
 								(bookToSell.getPrice() * sellQuantity), sellQuantity);
 						sale.add(saleH);
@@ -431,14 +518,14 @@ public class Program {
 				int sellQuantity = 0;
 				do {
 					System.out.printf("Tell us how many magazines %s wants to buy?\n", magazineToSell.getName());
-				    try {
-				        sellQuantity = sc.nextInt();
-				        if (sellQuantity <= 0) {
-				            throw new Exception("The quantity cannot be negative or zero.");
-				        }
-				    } catch (Exception e) {
-				        System.out.println(e.getMessage());
-				    }
+					try {
+						sellQuantity = sc.nextInt();
+						if (sellQuantity <= 0) {
+							throw new Exception("The quantity cannot be negative or zero.");
+						}
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 				} while (sellQuantity <= 0);
 				sc.nextLine();
 				magazineToSell.sellItem(sellQuantity);
@@ -470,7 +557,8 @@ public class Program {
 		}
 	}
 
-	private static void sellCd(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers, ArrayList<Sale> sale) {
+	private static void sellCd(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers,
+			ArrayList<Sale> sale) {
 		boolean hasCd = false;
 		for (BookstoreItem item : items) {
 			if (item instanceof Cd) {
@@ -493,14 +581,14 @@ public class Program {
 				int sellQuantity = 0;
 				do {
 					System.out.printf("Tell us how many cd's %s wants to buy?\n", cdToSell.getName());
-				    try {
-				        sellQuantity = sc.nextInt();
-				        if (sellQuantity <= 0) {
-				            throw new Exception("The quantity cannot be negative or zero.");
-				        }
-				    } catch (Exception e) {
-				        System.out.println(e.getMessage());
-				    }
+					try {
+						sellQuantity = sc.nextInt();
+						if (sellQuantity <= 0) {
+							throw new Exception("The quantity cannot be negative or zero.");
+						}
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 				} while (sellQuantity <= 0);
 				sc.nextLine();
 				cdToSell.sellItem(sellQuantity);
@@ -533,14 +621,22 @@ public class Program {
 	}
 
 	private static void salesHistory(ArrayList<Sale> sales) {
-
-		System.out.println("----------- Sales history -----------");
-		for (Sale s : sales) {
-			System.out.printf("\nSeller: %s | Item: %s | Value: $%s | Quantity: %s",  s.getNameSeller(), s.getNameProduct(), s.getPrice(), s.getAmount());
-			System.out.println("\n------------------------------------");
+		try {
+			LocalDateTime now = LocalDateTime.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+			String dateFormatted = now.format(formatter);
+			System.out.println("----------- Sales history -----------");
+			System.out.println("Date: " + dateFormatted);
+			for (Sale s : sales) {
+				System.out.printf("\nSeller: %s | Item: %s | Value: $%s | Quantity: %s", s.getNameSeller(),
+						s.getNameProduct(), s.getPrice(), s.getAmount());
+				System.out.println("\n------------------------------------");
+			}
+			Sale s = sales.get(0);
+			System.out.printf("TOTAL ITEM: %s | TOTAL PRICE: $%s\n", s.totalItems(), s.totalSale());
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("No items sold!");
 		}
-		Sale s = sales.get(0);
-		System.out.printf("TOTAL ITEM: %s | TOTAL PRICE: $%s", s.totalItems(), s.totalSale());
 	}
 
 	private static void listBookstoreItems(ArrayList<BookstoreItem> items) {
@@ -578,7 +674,7 @@ public class Program {
 
 		if (cpf.length() != 11) {
 
-			throw new IllegalArgumentException("CPF must contain 11 numerical digits.");
+			throw new IllegalArgumentException("CPF must contain 11 numerical digits!");
 		}
 
 		return cpf;
@@ -598,10 +694,21 @@ public class Program {
 
 		if (isbn.length() != 10) {
 
-			throw new IllegalArgumentException("ISBN must contain 10 digits.");
+			throw new IllegalArgumentException("ISBN must contain 10 digits!");
 		}
 
 		return isbn;
+	}
+
+	private static String verifyYear(String year) {
+		year = year.replaceAll("[^0-9]", "");
+
+		if (year.length() != 4) {
+
+			throw new IllegalArgumentException("Year Publication must contain 4 digits!");
+		}
+
+		return year;
 	}
 
 	private static Book findBookByISBN(ArrayList<BookstoreItem> items, String isbn) {
