@@ -23,7 +23,7 @@ public class Program {
 			try {
 				System.out.println("\n----------- Bookstore System -----------" + "\n1 - Register Seller"
 						+ "\n2 - Register bookstore item" + "\n3 - Sell" + "\n4 - Sales history"
-						+ "\n5 - List bookstore items" + "\n6 - List sellers" + "\n0 - Exit"
+						+ "\n5 - List bookstore items" + "\n6 - List sellers" + "\n7 - Best Selling Item" + "\n0 - Exit"
 						+ "\n--------------------------------------" + "\nEnter the desired option:");
 
 				option = sc.nextInt();
@@ -59,6 +59,11 @@ public class Program {
 
 				case 6:
 					listSellers(sellers);
+					break;
+
+				case 7:
+					BestSellingItem repeat = new BestSellingItem();
+					repeat.method(sales);
 					break;
 
 				default:
@@ -116,281 +121,27 @@ public class Program {
 
 		switch (option) {
 		case 1:
-			registerBook(sc, items);
+
+			Book book = new Book(null, null, null, null, 0, 0.0, null, null);
+			book.addItem(items);
 			break;
+
 		case 2:
-			registerMagazine(sc, items);
+
+			Magazine magazine = new Magazine(null, null, null, null, 0, 0.0, null);
+			magazine.addItem(items);
 			break;
+
 		case 3:
-			registerCd(sc, items);
+
+			Cd cd = new Cd(null, null, null, null, 0, 0.0, 0);
+			cd.addItem(items);
 			break;
+
 		default:
 			System.out.println("Invalid option!");
 			break;
 		}
-	}
-
-	private static void registerBook(Scanner sc, ArrayList<BookstoreItem> items) {
-		System.out.println("----------- Register Book -----------");
-		String name = null, author = null, yearPublication = null, isbn = null, gender = null;
-		Integer amount = 0;
-		Double price = 0.0;
-		while (true) {
-			try {
-				while (true) {
-					System.out.println("Name: ");
-					name = sc.nextLine();
-					if (name.equals("")) {
-						System.out.println("Empty name is invalid, please enter a valid name!");
-					} else {
-						break;
-					}
-				}
-
-				while (true) {
-					System.out.println("Author: ");
-					author = sc.nextLine();
-					if (author.equals("")) {
-						System.out.println("Empty author name is invalid, please enter a valid name!");
-					} else {
-						break;
-					}
-				}
-
-				while (true) {
-					System.out.println("Year publication: ");
-					yearPublication = sc.nextLine();
-					try {
-						yearPublication = verifyYear(yearPublication);
-						break;
-					} catch (IllegalArgumentException e) {
-						System.out.println("Erro: " + e.getMessage());
-					}
-				}
-
-				while (true) {
-					System.out.println("ISBN: ");
-					isbn = sc.nextLine();
-					try {
-						isbn = verifyIsbn(isbn);
-						break;
-					} catch (IllegalArgumentException e) {
-						System.out.println("Erro: " + e.getMessage());
-					}
-				}
-
-				while (true) {
-					System.out.println("Price: ");
-					price = sc.nextDouble();
-					sc.nextLine();
-					if (price > 0.0) {
-						break;
-					} else {
-						System.out.println("Price must be greater than zero!");
-					}
-				}
-
-				while (true) {
-					System.out.println("Amount: ");
-					amount = sc.nextInt();
-					sc.nextLine();
-					if (amount > 0) {
-						break;
-					} else {
-						System.out.println("Quantity must be greater than zero!");
-					}
-				}
-
-				while (true) {
-					System.out.println("Gender: ");
-					gender = sc.nextLine();
-
-					if (gender.equals("")) {
-						System.out.println("Gender needs to be informed! Enter the valid gender.");
-					} else {
-						break;
-					}
-				}
-
-				break;
-			} catch (NumberFormatException e) {
-				System.out.println("Invalid value. Enter a valid number.");
-			}
-		}
-
-		boolean availability = true;
-		Book book = new Book(name, author, yearPublication, availability, amount, price, isbn, gender);
-		items.add(book);
-
-		System.out.println("\nBook registered successfully!" + "\n-----------------------------------------");
-	}
-
-	private static void registerMagazine(Scanner sc, ArrayList<BookstoreItem> items) {
-		System.out.println("----------- Register Magazine -----------");
-		String name = null, author = null, yearPublication = null, edition = null;
-		Integer amount = 0;
-		Double price = 0.0;
-		while (true) {
-			try {
-				while (true) {
-					System.out.println("Name: ");
-					name = sc.nextLine();
-					if (name.equals("")) {
-						System.out.println("Empty name is invalid, please enter a valid name!");
-					} else {
-						break;
-					}
-				}
-
-				while (true) {
-					System.out.println("Author: ");
-					author = sc.nextLine();
-					if (author.equals("")) {
-						System.out.println("Empty author name is invalid, please enter a valid name!");
-					} else {
-						break;
-					}
-				}
-
-				while (true) {
-					System.out.println("Year publication: ");
-					yearPublication = sc.nextLine();
-					try {
-						yearPublication = verifyYear(yearPublication);
-						break;
-					} catch (IllegalArgumentException e) {
-						System.out.println("Erro: " + e.getMessage());
-					}
-				}
-
-				while (true) {
-					System.out.println("Edition: ");
-					edition = sc.nextLine();
-					if (edition.equals("")) {
-						System.out.println("Empty edition is invalid, please enter a valid edition!");
-					} else {
-						break;
-					}
-				}
-
-				while (true) {
-					System.out.println("Price: ");
-					price = sc.nextDouble();
-					sc.nextLine();
-					if (price > 0.0) {
-						break;
-					} else {
-						System.out.println("Price must be greater than zero!");
-					}
-				}
-
-				while (true) {
-					System.out.println("Amount: ");
-					amount = sc.nextInt();
-					sc.nextLine();
-					if (amount > 0) {
-						break;
-					} else {
-						System.out.println("Quantity must be greater than zero!");
-					}
-				}
-				break;
-			} catch (NumberFormatException e) {
-				System.out.println("Invalid value. Enter a valid number.");
-			}
-		}
-
-		boolean availability = true;
-
-		Magazine magazine = new Magazine(name, author, yearPublication, availability, amount, price, edition);
-		items.add(magazine);
-
-		System.out.println("\nMagazine registered successfully!" + "\n-----------------------------------------");
-	}
-
-	private static void registerCd(Scanner sc, ArrayList<BookstoreItem> items) {
-		System.out.println("----------- Register Cd -----------");
-
-		String name = null, author = null, yearPublication = null;
-		Integer amount = 0, volume = 0;
-		Double price = 0.0;
-		while (true) {
-			try {
-				while (true) {
-					System.out.println("Name: ");
-					name = sc.nextLine();
-					if (name.equals("")) {
-						System.out.println("Empty name is invalid, please enter a valid name!");
-					} else {
-						break;
-					}
-				}
-
-				while (true) {
-					System.out.println("Author: ");
-					author = sc.nextLine();
-					if (author.equals("")) {
-						System.out.println("Empty author name is invalid, please enter a valid name!");
-					} else {
-						break;
-					}
-				}
-
-				while (true) {
-					System.out.println("Year publication: ");
-					yearPublication = sc.nextLine();
-					try {
-						yearPublication = verifyYear(yearPublication);
-						break;
-					} catch (IllegalArgumentException e) {
-						System.out.println("Erro: " + e.getMessage());
-					}
-				}
-
-				while (true) {
-					System.out.println("Volume: ");
-					volume = sc.nextInt();
-					sc.nextLine();
-					if (volume > 0) {
-						break;
-					} else {
-						System.out.println("Volume must be greater than zero!");
-					}
-				}
-
-				while (true) {
-					System.out.println("Price: ");
-					price = sc.nextDouble();
-					sc.nextLine();
-					if (price > 0.0) {
-						break;
-					} else {
-						System.out.println("Price must be greater than zero!");
-					}
-				}
-
-				while (true) {
-					System.out.println("Amount: ");
-					amount = sc.nextInt();
-					sc.nextLine();
-					if (amount > 0) {
-						break;
-					} else {
-						System.out.println("Quantity must be greater than zero!");
-					}
-				}
-				break;
-			} catch (NumberFormatException e) {
-				System.out.println("Invalid value. Enter a valid number.");
-			}
-		}
-
-		boolean availability = true;
-
-		Cd cd = new Cd(name, author, yearPublication, availability, amount, price, volume);
-
-		items.add(cd);
-		System.out.println("\nCd registered successfully!" + "\n-----------------------------------------");
 	}
 
 	private static void sellItem(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers,
@@ -411,213 +162,30 @@ public class Program {
 					return;
 				case 1:
 
-					sellBook(sc, items, sellers, sale);
+					Book book = new Book(null, null, null, null, 0, 0.0, null, null);
+					book.sellItem(items, sellers, sale);
 					return;
 
 				case 2:
 
-					sellMagazine(sc, items, sellers, sale);
+					Magazine magazine = new Magazine(null, null, null, null, 0, 0.0, null);
+					magazine.sellItem(items, sellers, sale);
 					return;
 
 				case 3:
-					sellCd(sc, items, sellers, sale);
+
+					Cd cd = new Cd(null, null, null, null, 0, 0.0, 0);
+					cd.sellItem(items, sellers, sale);
 					return;
+
 				default:
+
 					System.out.println("Invalid option!");
 					break;
 				}
 			}
 		}
 
-	}
-
-	private static void sellBook(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers,
-			ArrayList<Sale> sale) {
-		boolean hasBooks = false;
-		for (BookstoreItem item : items) {
-			if (item instanceof Book) {
-				hasBooks = true;
-				break;
-			}
-		}
-
-		if (!hasBooks) {
-			System.out.println("There are no books registered at the moment.");
-			return;
-		}
-		System.out.println("Enter the isbn of the book: ");
-		String isbn = sc.nextLine();
-
-		Book bookToSell = findBookByISBN(items, isbn);
-
-		if (bookToSell != null) {
-			if (bookToSell.getAvailability()) {
-				int sellQuantity = 0;
-				do {
-					System.out.printf("Tell us how many books %s wants to buy?\n", bookToSell.getName());
-					try {
-						sellQuantity = sc.nextInt();
-						if (sellQuantity <= 0) {
-							throw new Exception("The quantity cannot be negative or zero.");
-						}
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-					}
-				} while (sellQuantity <= 0);
-				sc.nextLine();
-				bookToSell.sellItem(sellQuantity);
-
-				boolean validSeller = false;
-				while (!validSeller) {
-					System.out.println("Inform the seller CPF: ");
-					String cpf = sc.nextLine();
-
-					Seller seller = findSellerByCPF(sellers, cpf);
-
-					if (seller != null) {
-
-						Sale saleH = new Sale(bookToSell.getName(), seller.getName(),
-								(bookToSell.getPrice() * sellQuantity), sellQuantity);
-						sale.add(saleH);
-
-						validSeller = true;
-						System.out.println("Sale Successfully Completed!");
-					} else {
-						System.out.println("Invalid seller, please re-enter!");
-					}
-				}
-			} else {
-				System.out.println("The book is not available!");
-			}
-		} else {
-			System.out.println("The book is not registered!");
-		}
-	}
-
-	private static void sellMagazine(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers,
-			ArrayList<Sale> sale) {
-		boolean hasMagazine = false;
-		for (BookstoreItem item : items) {
-			if (item instanceof Magazine) {
-				hasMagazine = true;
-				break;
-			}
-		}
-
-		if (!hasMagazine) {
-			System.out.println("There are no magazines registered at the moment.");
-			return;
-		}
-		System.out.println("Enter the name of the magazine: ");
-		String name = sc.nextLine();
-
-		Magazine magazineToSell = findMagazineByName(items, name);
-
-		if (magazineToSell != null) {
-			if (magazineToSell.getAvailability()) {
-				int sellQuantity = 0;
-				do {
-					System.out.printf("Tell us how many magazines %s wants to buy?\n", magazineToSell.getName());
-					try {
-						sellQuantity = sc.nextInt();
-						if (sellQuantity <= 0) {
-							throw new Exception("The quantity cannot be negative or zero.");
-						}
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-					}
-				} while (sellQuantity <= 0);
-				sc.nextLine();
-				magazineToSell.sellItem(sellQuantity);
-
-				boolean validSeller = false;
-				while (!validSeller) {
-					System.out.println("Inform the seller CPF: ");
-					String cpf = sc.nextLine();
-
-					Seller seller = findSellerByCPF(sellers, cpf);
-
-					if (seller != null) {
-
-						Sale saleH = new Sale(magazineToSell.getName(), seller.getName(),
-								(magazineToSell.getPrice() * sellQuantity), sellQuantity);
-						sale.add(saleH);
-
-						validSeller = true;
-						System.out.println("Sale Successfully Completed!");
-					} else {
-						System.out.println("Invalid seller, please re-enter!");
-					}
-				}
-			} else {
-				System.out.println("The magazine is not available!");
-			}
-		} else {
-			System.out.println("The magazine is not registered!");
-		}
-	}
-
-	private static void sellCd(Scanner sc, ArrayList<BookstoreItem> items, ArrayList<Seller> sellers,
-			ArrayList<Sale> sale) {
-		boolean hasCd = false;
-		for (BookstoreItem item : items) {
-			if (item instanceof Cd) {
-				hasCd = true;
-				break;
-			}
-		}
-
-		if (!hasCd) {
-			System.out.println("There are no cd's registered at the moment.");
-			return;
-		}
-		System.out.println("Enter the name of the cd: ");
-		String name = sc.nextLine();
-
-		Cd cdToSell = findCdByName(items, name);
-
-		if (cdToSell != null) {
-			if (cdToSell.getAvailability()) {
-				int sellQuantity = 0;
-				do {
-					System.out.printf("Tell us how many cd's %s wants to buy?\n", cdToSell.getName());
-					try {
-						sellQuantity = sc.nextInt();
-						if (sellQuantity <= 0) {
-							throw new Exception("The quantity cannot be negative or zero.");
-						}
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-					}
-				} while (sellQuantity <= 0);
-				sc.nextLine();
-				cdToSell.sellItem(sellQuantity);
-
-				boolean validSeller = false;
-				while (!validSeller) {
-					System.out.println("Inform the seller CPF: ");
-					String cpf = sc.nextLine();
-
-					Seller seller = findSellerByCPF(sellers, cpf);
-
-					if (seller != null) {
-
-						Sale saleH = new Sale(cdToSell.getName(), seller.getName(),
-								(cdToSell.getPrice() * sellQuantity), sellQuantity);
-						sale.add(saleH);
-
-						validSeller = true;
-						System.out.println("Sale Successfully Completed!");
-					} else {
-						System.out.println("Invalid seller, please re-enter!");
-					}
-				}
-			} else {
-				System.out.println("The cd is not available!");
-			}
-		} else {
-			System.out.println("The cd is not registered!");
-		}
 	}
 
 	private static void salesHistory(ArrayList<Sale> sales) {
@@ -687,72 +255,5 @@ public class Program {
 			}
 		}
 		return false;
-	}
-
-	private static String verifyIsbn(String isbn) {
-		isbn = isbn.replaceAll("[^0-9]", "");
-
-		if (isbn.length() != 10) {
-
-			throw new IllegalArgumentException("ISBN must contain 10 digits!");
-		}
-
-		return isbn;
-	}
-
-	private static String verifyYear(String year) {
-		year = year.replaceAll("[^0-9]", "");
-
-		if (year.length() != 4) {
-
-			throw new IllegalArgumentException("Year Publication must contain 4 digits!");
-		}
-
-		return year;
-	}
-
-	private static Book findBookByISBN(ArrayList<BookstoreItem> items, String isbn) {
-		for (BookstoreItem item : items) {
-			if (item instanceof Book) {
-				Book book = (Book) item;
-				if (isbn.equalsIgnoreCase(book.getIsbn())) {
-					return book;
-				}
-			}
-		}
-		return null;
-	}
-
-	private static Seller findSellerByCPF(ArrayList<Seller> sellers, String cpf) {
-		for (Seller seller : sellers) {
-			if (cpf.equalsIgnoreCase(seller.getCpf())) {
-				return seller;
-			}
-		}
-		return null;
-	}
-
-	private static Magazine findMagazineByName(ArrayList<BookstoreItem> items, String name) {
-		for (BookstoreItem item : items) {
-			if (item instanceof Magazine) {
-				Magazine magazine = (Magazine) item;
-				if (name.equalsIgnoreCase(magazine.getName())) {
-					return magazine;
-				}
-			}
-		}
-		return null;
-	}
-
-	private static Cd findCdByName(ArrayList<BookstoreItem> items, String name) {
-		for (BookstoreItem item : items) {
-			if (item instanceof Cd) {
-				Cd cd = (Cd) item;
-				if (name.equalsIgnoreCase(cd.getName())) {
-					return cd;
-				}
-			}
-		}
-		return null;
 	}
 }

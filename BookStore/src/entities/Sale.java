@@ -23,20 +23,24 @@ public class Sale {
 	public String getNameSeller() {
 		return nameSeller;
 	}
-	
+
 	public double getPrice() {
 		return price;
 	}
-	
+
 	public int getAmount() {
 		return amount;
 	}
+
 	public int totalItems() {
 		return totalItem;
 	}
-	
-	
+
 	public double totalSale() {
 		return totalSold;
+	}
+
+	public String toString() {
+		return "\nProduct name: " + getNameProduct();
 	}
 }
