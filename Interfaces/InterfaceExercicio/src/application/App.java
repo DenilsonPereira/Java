@@ -6,8 +6,9 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import models.entities.CarRental;
-import models.entities.Invoice;
 import models.entities.Vehicle;
+import models.services.BrazilTaxService;
+import models.services.RentalService;
 
 public class App {
     public static void main(String[] args){
@@ -19,9 +20,9 @@ public class App {
         System.out.println("Entre com os dados do aluguel");
         System.out.print("Modelo do carro: ");
         String carModel = sc.nextLine();
-        System.out.println("Retirada (dd/MM/yyyy hh:mm): ");
+        System.out.print("Retirada (dd/MM/yyyy hh:mm): ");
         LocalDateTime start = LocalDateTime.parse(sc.nextLine(), fmt);
-        System.out.println("Retorno (dd/MM/yyyy hh:mm): ");
+        System.out.print("Retorno (dd/MM/yyyy hh:mm): ");
         LocalDateTime finish = LocalDateTime.parse(sc.nextLine(), fmt);
 
         Vehicle vehicle = new Vehicle(carModel);
@@ -29,13 +30,18 @@ public class App {
         CarRental cr = new CarRental(start, finish, vehicle);
 
         System.out.println("Entre com o preço por hora: ");
+        double pricePerHour = sc.nextDouble();
         System.out.println("Entre com o preço por dia: ");
+        double pricePerDay = sc.nextDouble();
+
+        RentalService rentalService = new RentalService(pricePerHour, pricePerDay, new BrazilTaxService());
+
+        rentalService.processInvoice(cr);
 
         System.out.println("FATURA:");
-        System.out.println("Pagamento básico: " + cr.getInvoice().getBasicPayments());
-        System.out.println("Imposto: " + cr.getInvoice().getTax());
-        System.out.println("Pagamento total: " + cr.getInvoice().getTotalPayment());
-        
+        System.out.println("Pagamento básico: " + String.format("%.2f",  cr.getInvoice().getBasicPayments()));
+        System.out.println("Imposto: " + String.format("%.2f",cr.getInvoice().getTax()));
+        System.out.println("Pagamento total: " + String.format("%.2f",cr.getInvoice().getTotalPayment()));
 
         sc.close();
     }
